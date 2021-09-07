@@ -7,10 +7,24 @@ export let grid: Grid;
 
 </script>
 
-<div>
+<div class="grid-container">
     {#each grid.grid as column}
+    <div class="grid-column">
         {#each column as gridCell}
         <NonoCell gridCell={gridCell} />
         {/each}
+    </div>
     {/each}
 </div>
+
+<style>
+    .grid-container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .grid-column {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+</style>
