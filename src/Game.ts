@@ -1,7 +1,10 @@
 
 export interface GridCell {
     state: CellState, // Empty, marked, X'ed
-    target: boolean // Solution state of cell
+    target: boolean, // Solution state of cell
+    selection: boolean, // Is part of current drag-selection
+    x: number, // Coords in the grid
+    y: number
 }
 
 export enum CellState {
@@ -35,7 +38,10 @@ export class Grid {
             for (let y = 0; y < height; y++) {
                 col[y] = {
                     state: CellState.Empty,
-                    target: false // Solution state of cell
+                    target: false, // Solution state of cell
+                    selection: false,
+                    x: x,
+                    y: y
                 };
             }
             grid.push(col);

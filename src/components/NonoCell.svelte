@@ -1,8 +1,10 @@
 <script lang="ts">
-    export let gridCell: import("src/Game").GridCell;
+    import { GridCell } from "/src/Game";
+    
+    export let gridCell: GridCell;
 </script>
 <div>
-    {gridCell.state}
+    x: {gridCell.x} y: {gridCell.y}
 </div>
 
 <style>
