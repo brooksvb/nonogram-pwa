@@ -47,4 +47,40 @@ export class Grid {
         // TODO: Check if out of bounds
         return this.grid[x][y];
     }
+
+
+    /**
+     * 
+     * @param row 
+     * @returns array of numbers representing groups in the row
+     */
+    public getRowGroups(row: number): number[] {
+        const groups = [];
+        let counter = 0;
+        for (let i = 0; i < this.height; i++) {
+            if (this.grid[i][row].target) {
+                counter++;
+            } else if (counter !== 0) {
+                // Add the group number and restart count
+                groups.push(counter);
+                counter = 0;
+            }
+        }
+        return groups;
+    }
+
+    public getColGroups(col: number): number[] {
+        const groups = [];
+        let counter = 0;
+        for (let i = 0; i < this.width; i++) {
+            if (this.grid[col][i].target) {
+                counter++;
+            } else if (counter !== 0) {
+                // Add the group number and restart count
+                groups.push(counter);
+                counter = 0;
+            }
+        }
+        return groups;
+    }
 }
