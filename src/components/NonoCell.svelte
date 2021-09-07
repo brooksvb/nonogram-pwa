@@ -1,9 +1,10 @@
 <script lang="ts">
     import { GridCell } from "/src/Game";
-    
+
     export let gridCell: GridCell;
 </script>
-<div>
+<div data-x={gridCell.x} data-y={gridCell.y}>
+
     x: {gridCell.x} y: {gridCell.y}
 </div>
 
@@ -11,7 +12,11 @@
     div {
         width: 100px;
         height: 100px;
-        margin: 10px;
+        padding: 10px;
         background-color: aqua;
+    }
+
+    .selection {
+        background-color: blue;
     }
 </style>

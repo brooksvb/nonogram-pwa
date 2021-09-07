@@ -7,18 +7,88 @@ export interface GridCell {
     y: number
 }
 
+export type GridCoords = {
+    x: number,
+    y: number
+}
+
 export enum CellState {
     Empty, // Cell is empty
     Marked, // Cell is marked
     Crossed // Cell is marked with an X (only a visual, does not affect solution-checking)
 }
 
+export enum SelectionMode {
+    Marking,
+    Crossing
+}
+
 export type GridData = GridCell[][];
-export class NonoGame {
+
+export class GameController {
     public grid: Grid;
+
+    public selectionMode: SelectionMode = SelectionMode.Marking;
 
     public startNewGrid(): void {
         this.grid = new Grid(10, 10);
+    }
+
+    public applySelection(selection: GridSelection): void {
+        /**
+         * If initial cell was empty, and selection includes marked cells, mark empty cells in selection
+         * If initial cell was marked, unmark marked cells in selection
+         * If initial cell was flagged, unflag cells in selection
+         */
+        const firstCell = this.grid.grid[selection.startCoord.x][selection.startCoord.y];
+        let targetState: CellState;
+        // TODO: Make dependent on selectionMode
+        switch (firstCell.state) {
+            case CellState.Marked:
+                targetState = CellState.Empty;
+                break;
+            case CellState.Crossed:
+                targetState = CellState.Empty;
+                break;
+            case CellState.Empty:
+                targetState = CellState.Marked;
+                break;
+        }
+
+        // Do some logic work to make it easier to iterate through elements in correct direction
+        let direction = '';
+        let bottomBound: number;
+        let upperBound: number;
+        if (selection.startCoord.x === selection.endCoord.x) {
+            direction = 'col';
+            // Put the lower index in bottomBound
+            if (selection.startCoord.y > selection.endCoord.y) {
+                bottomBound = selection.endCoord.y;
+                upperBound = selection.startCoord.y;
+            } else {
+                bottomBound = selection.startCoord.y;
+                upperBound = selection.endCoord.y;
+            }
+        }
+        else if (selection.startCoord.y === selection.endCoord.y) {
+            direction = 'row';
+            if (selection.startCoord.x > selection.endCoord.x) {
+                bottomBound = selection.endCoord.x;
+                upperBound = selection.startCoord.x;
+            } else {
+                bottomBound = selection.startCoord.x;
+                upperBound = selection.endCoord.x;
+            }
+        }
+
+        for (let i = bottomBound; i < upperBound; i++) {
+            if (direction === 'col') {
+                this.grid.grid[selection.startCoord.x][i].state = targetState;
+            } else {
+                this.grid.grid[i][selection.startCoord.y].state = targetState;
+            }
+        }
+
     }
 
 }
@@ -106,20 +176,74 @@ export interface GridSelection {
  */
 export class DragSelector {
     
-    constructor() {
+    private initialCoords: GridCoords | null = null;
+    private endCoords: GridCoords | null = null;
+
+    public valid = false;
+
+    constructor(private grid: Grid, private controller: GameController) {
         //
+        this.onMouseDown.bind(this);
+        this.onMouseMove.bind(this);
+        this.onMouseUp.bind(this);
     }
 
-    getGridSelection(): GridSelection {
+    onMouseDown = (e: MouseEvent): void => {
+        this.initialCoords = this.getGridCoordsFromScreenCoords(e.x, e.y);
+        this.endCoords = this.initialCoords;
+        console.log(this.initialCoords);
+
+        // Listen to events until selection done
+        document.addEventListener('mousemove', this.onMouseMove);
+        document.addEventListener('mouseup', this.onMouseUp);
+    };
+
+    onMouseMove = (e: MouseEvent): void => {
+        //
+        this.endCoords = this.getGridCoordsFromScreenCoords(e.x, e.y);
+        this.valid = this.isValidSelection();
+        console.log(e.x, e.y, this.valid);
+    }
+
+    onMouseUp = (e: MouseEvent): void => {
+        //
+        console.log(this.initialCoords, this.endCoords);
+        document.removeEventListener('mousemove', this.onMouseMove)
+        document.removeEventListener('mouseup', this.onMouseUp)
+
+        if (this.isValidSelection) {
+            // If line is still valid, mark the highlighted cells with active mode (mark, X)
+            // If cells are already marked, unmark
+            // Check for invalid moves if strict mode is on
+        }
+
+        this.valid = false;
+        
+    }
+
+    /**
+     * A valid selection must be in one row or column
+     * @returns boolean
+     */
+    public isValidSelection(): boolean {
+        if (this.initialCoords === null || this.endCoords === null) return false; 
+        return this.initialCoords.x === this.endCoords.x || this.initialCoords.y === this.endCoords.y;
+    }
+
+    public getGridSelection(): GridSelection {
         return {
-            startCoord: {
-                x: 0,
-                y: 0
-            },
-            endCoord: {
-                x: 0,
-                y: 0
-            }
+            startCoord: this.initialCoords,
+            endCoord: this.endCoords
+        }
+    }
+
+    private getGridCoordsFromScreenCoords(x: number, y: number): GridCoords {
+        const element = document.elementFromPoint(x, y);
+        const gridX = parseInt(element.getAttribute('data-x'));
+        const gridY = parseInt(element.getAttribute('data-y'));
+        return {
+            x: gridX,
+            y: gridY
         }
     }
 
