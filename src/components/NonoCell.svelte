@@ -1,5 +1,9 @@
-
-<div></div>
+<script lang="ts">
+    export let gridCell: import("src/Game").GridCell;
+</script>
+<div>
+    {gridCell.state}
+</div>
 
 <style>
     div {

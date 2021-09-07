@@ -1,15 +1,16 @@
 <script lang="ts">
+import type { Grid } from "/src/Game";
+
 import NonoCell from "./NonoCell.svelte";
 
-export let gridRows: number = 10;
-export let gridCols: number = 10;
-
-
+export let grid: Grid;
 
 </script>
 
 <div>
-    {#each Array(gridRows) as _}
-    <NonoCell />
+    {#each grid.grid as column}
+        {#each column as gridCell}
+        <NonoCell gridCell={gridCell} />
+        {/each}
     {/each}
 </div>
