@@ -54,7 +54,6 @@ export class Grid {
         return this.grid[x][y];
     }
 
-
     /**
      * 
      * @param row 
@@ -89,4 +88,39 @@ export class Grid {
         }
         return groups;
     }
+}
+
+export interface GridSelection {
+    startCoord: {
+        x: number,
+        y: number
+    },
+    endCoord: {
+        x: number,
+        y: number
+    }
+}
+
+/**
+ * Contains logic for watching mouse and touch events and calculating the selection
+ */
+export class DragSelector {
+    
+    constructor() {
+        //
+    }
+
+    getGridSelection(): GridSelection {
+        return {
+            startCoord: {
+                x: 0,
+                y: 0
+            },
+            endCoord: {
+                x: 0,
+                y: 0
+            }
+        }
+    }
+
 }
