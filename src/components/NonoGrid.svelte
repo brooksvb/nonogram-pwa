@@ -4,7 +4,7 @@ import { DragSelector } from "/src/Game";
 import { gridStore } from "src/stores";
 
 import NonoCell from "./NonoCell.svelte";
-import type { GameController } from "src/Game";
+import { GameController, SelectionMode } from "/src/Game";
 
 export let controller: GameController
 export let grid: GridData;
@@ -27,6 +27,11 @@ let valid = false;
         {/each}
     </div>
     {/each}
+</div>
+
+<div>
+    <button on:click={() => controller.selectionMode = SelectionMode.Marking} class:active={controller.selectionMode === SelectionMode.Marking}>Mark</button>
+    <button on:click={() => controller.selectionMode = SelectionMode.Crossing} class:active={controller.selectionMode === SelectionMode.Crossing}>Cross</button>
 </div>
 
 <style>
