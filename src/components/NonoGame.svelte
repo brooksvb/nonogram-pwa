@@ -11,5 +11,6 @@ gameController.startNewGrid()
 </script>
 
 <h1>NonoGame</h1>
-<button on:click="{gameController.startNewGrid()}">Reset Grid</button>
+<button on:click={() => gameController.startNewGrid()}>New Grid</button>
+
 <NonoGrid controller={gameController} grid={$gridStore} />
