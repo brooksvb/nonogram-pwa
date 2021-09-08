@@ -1,12 +1,13 @@
 <script lang="ts">
-import type { Grid } from "/src/Game";
+import type { GridData } from "/src/Game";
 import { DragSelector } from "/src/Game";
+import { gridStore } from "src/stores";
 
 import NonoCell from "./NonoCell.svelte";
 import type { GameController } from "src/Game";
 
-export let grid: Grid;
 export let controller: GameController
+export let grid: GridData;
 
 let dragSelector = new DragSelector(grid, controller);
 
@@ -19,7 +20,7 @@ let valid = false;
 </h1>
 
 <div class="grid-container" on:mousedown={dragSelector.onMouseDown} on:mousemove="{() => valid = dragSelector.isValidSelection()}">
-    {#each grid.grid as column}
+    {#each $gridStore as column}
     <div class="grid-column">
         {#each column as gridCell}
         <NonoCell gridCell={gridCell} />

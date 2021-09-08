@@ -1,3 +1,8 @@
+/**
+ * The GridData matrix has it's origin on the bottom left. First coordinate (x) refers to the column, 
+ * second coordinate (y) refers to row. 
+ */
+export type GridData = GridCell[][];
 
 export interface GridCell {
     state: CellState, // Empty, marked, X'ed
@@ -23,7 +28,6 @@ export enum SelectionMode {
     Crossing
 }
 
-export type GridData = GridCell[][];
 
 export class GameController {
     public grid: Grid;
@@ -32,6 +36,11 @@ export class GameController {
 
     public startNewGrid(): void {
         this.grid = new Grid(10, 10);
+        gridStore.set(this.grid.grid);
+    }
+
+    public getGridData(): GridData {
+        return this.grid.grid;
     }
 
     public applySelection(selection: GridSelection): void {
@@ -55,7 +64,9 @@ export class GameController {
                 break;
         }
 
-        // Do some logic work to make it easier to iterate through elements in correct direction
+        // TODO: Check for invalid moves if strict mode is on
+
+        // Do some logic work to make it easier to iterate through cells in correct direction
         let direction = '';
         let bottomBound: number;
         let upperBound: number;
@@ -81,14 +92,17 @@ export class GameController {
             }
         }
 
-        for (let i = bottomBound; i < upperBound; i++) {
+        // Iterate through selection to update state
+        // Note that we include the upperBound in this iteration
+        for (let i = bottomBound; i <= upperBound; i++) {
             if (direction === 'col') {
                 this.grid.grid[selection.startCoord.x][i].state = targetState;
             } else {
                 this.grid.grid[i][selection.startCoord.y].state = targetState;
             }
         }
-
+        console.log(this.grid.grid);
+        // TODO: 
     }
 
 }
@@ -188,10 +202,11 @@ export class DragSelector {
         this.onMouseUp.bind(this);
     }
 
+    // TODO: add touch events
     onMouseDown = (e: MouseEvent): void => {
         this.initialCoords = this.getGridCoordsFromScreenCoords(e.x, e.y);
         this.endCoords = this.initialCoords;
-        console.log(this.initialCoords);
+        // console.log(this.initialCoords);
 
         // Listen to events until selection done
         document.addEventListener('mousemove', this.onMouseMove);
@@ -199,31 +214,30 @@ export class DragSelector {
     };
 
     onMouseMove = (e: MouseEvent): void => {
-        //
         this.endCoords = this.getGridCoordsFromScreenCoords(e.x, e.y);
         this.valid = this.isValidSelection();
-        console.log(e.x, e.y, this.valid);
+        // console.log(e.x, e.y, this.valid);
+
+        // Visual feedback for selection
+        
     }
 
     onMouseUp = (e: MouseEvent): void => {
-        //
         console.log(this.initialCoords, this.endCoords);
         document.removeEventListener('mousemove', this.onMouseMove)
         document.removeEventListener('mouseup', this.onMouseUp)
 
-        if (this.isValidSelection) {
-            // If line is still valid, mark the highlighted cells with active mode (mark, X)
-            // If cells are already marked, unmark
-            // Check for invalid moves if strict mode is on
+        if (this.isValidSelection()) {
+            this.controller.applySelection(this.getGridSelection());
         }
 
         this.valid = false;
-        
+        this.initialCoords = null;
+        this.endCoords = null;
     }
 
     /**
      * A valid selection must be in one row or column
-     * @returns boolean
      */
     public isValidSelection(): boolean {
         if (this.initialCoords === null || this.endCoords === null) return false; 
