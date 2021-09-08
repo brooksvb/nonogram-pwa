@@ -1,4 +1,4 @@
-import { gridStore } from "./stores";
+import { currentSelectionStore, gridStore } from "./stores";
 import { get as get_store_value } from 'svelte/store';
 
 /**
@@ -10,7 +10,6 @@ export type GridData = GridCell[][];
 export interface GridCell {
     state: CellState, // Empty, marked, X'ed
     target: boolean, // Solution state of cell
-    selection: boolean, // Is part of current drag-selection
     x: number, // Coords in the grid
     y: number
 }
@@ -43,13 +42,12 @@ export class GameController {
     public applySelection(selection: GridSelection): void {
         const currentGrid = get_store_value(gridStore);
         /**
-         * If initial cell was empty, and selection includes marked cells, mark empty cells in selection
+         * If initial cell was empty, apply the mode indicated by selectionMode
          * If initial cell was marked, unmark marked cells in selection
-         * If initial cell was flagged, unflag cells in selection
+         * If initial cell was crossed, uncross cells in selection
          */
         const firstCell = currentGrid[selection.startCoord.x][selection.startCoord.y];
         let targetState: CellState;
-        // TODO: Make dependent on selectionMode
         switch (firstCell.state) {
             case CellState.Marked:
                 targetState = CellState.Empty;
@@ -58,7 +56,11 @@ export class GameController {
                 targetState = CellState.Empty;
                 break;
             case CellState.Empty:
-                targetState = CellState.Marked;
+                if (this.selectionMode === SelectionMode.Marking) {
+                    targetState = CellState.Marked;
+                } else if (this.selectionMode === SelectionMode.Crossing) {
+                    targetState = CellState.Crossed;
+                }
                 break;
         }
 
@@ -93,6 +95,9 @@ export class GameController {
         const newGrid = currentGrid.map(col => {
             return col.map(cell => {
                 const newCell = { ...cell };
+                // In all cases, if cell is not same state as first cell, ignore it
+                if (cell.state !== firstCell.state) return newCell;
+
                 // If in same column and within bounds
                 if (direction === 'col' && cell.x === selection.startCoord.x && cell.y >= bottomBound && cell.y <= upperBound) {
                     newCell.state = targetState;
@@ -120,10 +125,10 @@ export class GridHelper {
         for (let x = 0; x < width; x++) {
             const col: GridCell[] = new Array<GridCell>();
             for (let y = 0; y < height; y++) {
+                const isTarget = Math.random() >= .5;
                 col[y] = {
                     state: CellState.Empty,
-                    target: false, // Solution state of cell
-                    selection: false,
+                    target: isTarget, // Solution state of cell
                     x: x,
                     y: y
                 };
@@ -133,12 +138,24 @@ export class GridHelper {
         return grid;
     }
 
+    public static coordsAreInSelection(x: number, y: number, selection: GridSelection): boolean {
+        const [lowerX, upperX] = selection.startCoord.x > selection.endCoord.x 
+        ? [selection.endCoord.x, selection.startCoord.x] 
+        : [selection.startCoord.x, selection.endCoord.x];
+        const [lowerY, upperY] = selection.startCoord.y > selection.endCoord.y
+        ? [selection.endCoord.y, selection.startCoord.y] 
+        : [selection.startCoord.y, selection.endCoord.y];
+        
+        return x >= lowerX && x <= upperX && y >= lowerY && y <= upperY;
+    }
+
     /**
      * 
      * @param row 
      * @returns array of numbers representing groups in the row
      */
-    public static getRowGroups(grid: GridData, row: number): number[] {
+    public static getRowGroups(row: number): number[] {
+        const grid = get_store_value(gridStore);
         const groups = [];
         let counter = 0;
         for (let i = 0; i < grid.length; i++) {
@@ -153,7 +170,8 @@ export class GridHelper {
         return groups;
     }
 
-    public static getColGroups(grid: GridData, col: number): number[] {
+    public static getColGroups(col: number): number[] {
+        const grid = get_store_value(gridStore);
         const groups = [];
         let counter = 0;
         for (let i = 0; i < grid[0].length; i++) {
@@ -177,7 +195,8 @@ export interface GridSelection {
     endCoord: {
         x: number,
         y: number
-    }
+    },
+    valid: boolean
 }
 
 /**
@@ -197,11 +216,18 @@ export class DragSelector {
         this.onMouseUp.bind(this);
     }
 
+    private updateSelection() {
+        const currentSelection = this.getGridSelection();
+        if (get_store_value(currentSelectionStore) !== currentSelection) {
+            currentSelectionStore.set(currentSelection);
+        }
+    }
+
     // TODO: add touch events
     onMouseDown = (e: MouseEvent): void => {
         this.initialCoords = this.getGridCoordsFromScreenCoords(e.x, e.y);
         this.endCoords = this.initialCoords;
-        // console.log(this.initialCoords);
+        this.updateSelection();
 
         // Listen to events until selection done
         document.addEventListener('mousemove', this.onMouseMove);
@@ -211,7 +237,7 @@ export class DragSelector {
     onMouseMove = (e: MouseEvent): void => {
         this.endCoords = this.getGridCoordsFromScreenCoords(e.x, e.y);
         this.valid = this.isValidSelection();
-        // console.log(e.x, e.y, this.valid);
+        this.updateSelection();
 
         // Visual feedback for selection
         
@@ -221,7 +247,7 @@ export class DragSelector {
         console.log(this.initialCoords, this.endCoords);
         document.removeEventListener('mousemove', this.onMouseMove)
         document.removeEventListener('mouseup', this.onMouseUp)
-
+        
         if (this.isValidSelection()) {
             this.controller.applySelection(this.getGridSelection());
         }
@@ -229,6 +255,7 @@ export class DragSelector {
         this.valid = false;
         this.initialCoords = null;
         this.endCoords = null;
+        this.updateSelection();
     }
 
     /**
@@ -239,10 +266,14 @@ export class DragSelector {
         return this.initialCoords.x === this.endCoords.x || this.initialCoords.y === this.endCoords.y;
     }
 
-    public getGridSelection(): GridSelection {
+    public getGridSelection(): GridSelection|null {
+        if (this.initialCoords === null) {
+            return null;
+        }
         return {
             startCoord: this.initialCoords,
-            endCoord: this.endCoords
+            endCoord: this.endCoords,
+            valid: this.isValidSelection()
         }
     }
 

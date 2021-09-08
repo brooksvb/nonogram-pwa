@@ -13,4 +13,4 @@ gameController.startNewGrid()
 <h1>NonoGame</h1>
 <button on:click={() => gameController.startNewGrid()}>New Grid</button>
 
-<NonoGrid controller={gameController} grid={$gridStore} />
+<NonoGrid controller={gameController} />
