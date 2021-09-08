@@ -1,3 +1,6 @@
+import { gridStore } from "./stores";
+import { get as get_store_value } from 'svelte/store';
+
 /**
  * The GridData matrix has it's origin on the bottom left. First coordinate (x) refers to the column, 
  * second coordinate (y) refers to row. 
@@ -30,26 +33,21 @@ export enum SelectionMode {
 
 
 export class GameController {
-    public grid: Grid;
 
     public selectionMode: SelectionMode = SelectionMode.Marking;
 
     public startNewGrid(): void {
-        this.grid = new Grid(10, 10);
-        gridStore.set(this.grid.grid);
-    }
-
-    public getGridData(): GridData {
-        return this.grid.grid;
+        gridStore.set(GridHelper.generateGrid(10, 10));
     }
 
     public applySelection(selection: GridSelection): void {
+        const currentGrid = get_store_value(gridStore);
         /**
          * If initial cell was empty, and selection includes marked cells, mark empty cells in selection
          * If initial cell was marked, unmark marked cells in selection
          * If initial cell was flagged, unflag cells in selection
          */
-        const firstCell = this.grid.grid[selection.startCoord.x][selection.startCoord.y];
+        const firstCell = currentGrid[selection.startCoord.x][selection.startCoord.y];
         let targetState: CellState;
         // TODO: Make dependent on selectionMode
         switch (firstCell.state) {
@@ -92,29 +90,31 @@ export class GameController {
             }
         }
 
-        // Iterate through selection to update state
-        // Note that we include the upperBound in this iteration
-        for (let i = bottomBound; i <= upperBound; i++) {
-            if (direction === 'col') {
-                this.grid.grid[selection.startCoord.x][i].state = targetState;
-            } else {
-                this.grid.grid[i][selection.startCoord.y].state = targetState;
-            }
-        }
-        console.log(this.grid.grid);
-        // TODO: 
+        const newGrid = currentGrid.map(col => {
+            return col.map(cell => {
+                const newCell = { ...cell };
+                // If in same column and within bounds
+                if (direction === 'col' && cell.x === selection.startCoord.x && cell.y >= bottomBound && cell.y <= upperBound) {
+                    newCell.state = targetState;
+                    return newCell;
+                } 
+                // If in same row and within bounds
+                else if (direction === 'row' && cell.y === selection.startCoord.y && cell.x >= bottomBound && cell.x <= upperBound) {
+                    newCell.state = targetState
+                    return newCell;
+                } else {
+                    return newCell;
+                }
+            });
+        });
+        gridStore.set(newGrid);
     }
 
 }
 
-export class Grid {
-    public grid: GridData;
+export class GridHelper {
 
-    constructor(public readonly width: number, public readonly height: number) {
-        this.grid = this.generateGrid(width, height);
-    }
-
-    private generateGrid(width: number, height: number): GridData {
+    public static generateGrid(width: number, height: number): GridData {
         // Initializing typed multidim. array: https://stackoverflow.com/a/47801159/5869958
         const grid = new Array<Array<GridCell>>();
         for (let x = 0; x < width; x++) {
@@ -133,21 +133,16 @@ export class Grid {
         return grid;
     }
 
-    public getCell(x: number, y: number): GridCell {
-        // TODO: Check if out of bounds
-        return this.grid[x][y];
-    }
-
     /**
      * 
      * @param row 
      * @returns array of numbers representing groups in the row
      */
-    public getRowGroups(row: number): number[] {
+    public static getRowGroups(grid: GridData, row: number): number[] {
         const groups = [];
         let counter = 0;
-        for (let i = 0; i < this.height; i++) {
-            if (this.grid[i][row].target) {
+        for (let i = 0; i < grid.length; i++) {
+            if (grid[i][row].target) {
                 counter++;
             } else if (counter !== 0) {
                 // Add the group number and restart count
@@ -158,11 +153,11 @@ export class Grid {
         return groups;
     }
 
-    public getColGroups(col: number): number[] {
+    public static getColGroups(grid: GridData, col: number): number[] {
         const groups = [];
         let counter = 0;
-        for (let i = 0; i < this.width; i++) {
-            if (this.grid[col][i].target) {
+        for (let i = 0; i < grid[0].length; i++) {
+            if (grid[col][i].target) {
                 counter++;
             } else if (counter !== 0) {
                 // Add the group number and restart count
@@ -195,7 +190,7 @@ export class DragSelector {
 
     public valid = false;
 
-    constructor(private grid: Grid, private controller: GameController) {
+    constructor(private controller: GameController) {
         //
         this.onMouseDown.bind(this);
         this.onMouseMove.bind(this);

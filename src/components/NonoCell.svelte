@@ -6,14 +6,18 @@
 <div data-x={gridCell.x} data-y={gridCell.y} class:marked="{gridCell.state === CellState.marked}" class:crossed="{gridCell.state === CellState.Crossed}">
 
     x: {gridCell.x} y: {gridCell.y}
+    <br>
+    State: {gridCell.state}
 </div>
 
 <style>
     div {
-        width: 100px;
-        height: 100px;
+        width: 65px;
+        height: 65px;
         padding: 10px;
         border: 3px lightgray solid;
+        /* Stop text from being highlighted */
+        user-select: none; 
     }
 
     .selection {

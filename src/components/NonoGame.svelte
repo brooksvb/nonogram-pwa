@@ -1,7 +1,8 @@
 <script>
-import { Grid, GameController } from "/src/Game";
+import { GameController } from "/src/Game";
 
 import NonoGrid from "./NonoGrid.svelte";
+import { gridStore } from "/src/stores";
 
 let gameController = new GameController();
 
@@ -10,5 +11,5 @@ gameController.startNewGrid()
 </script>
 
 <h1>NonoGame</h1>
-
-<NonoGrid controller={gameController} grid={gameController.grid.grid} />
+<button on:click="{gameController.startNewGrid()}">Reset Grid</button>
+<NonoGrid controller={gameController} grid={$gridStore} />
