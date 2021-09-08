@@ -11,7 +11,7 @@
         if ($currentSelectionStore === null || !$currentSelectionStore.valid) {
             isSelected = false;
         } else {
-            isSelected = GridHelper.coordsInSelection(gridCell.x, gridCell.y, $currentSelectionStore);
+            isSelected = GridHelper.coordsAreInSelection(gridCell.x, gridCell.y, $currentSelectionStore);
         }
     }
 </script>
@@ -20,15 +20,13 @@ class:marked={gridCell.state === CellState.Marked}
 class:crossed={gridCell.state === CellState.Crossed}
 class:selection={isSelected}
 >
-
-    x: {gridCell.x} y: {gridCell.y}
+    <!-- x: {gridCell.x} y: {gridCell.y}
     <br>
-    State: {gridCell.state}
+    State: {gridCell.state} -->
 </div>
 
 <style>
     div {
-        width: 100%;
         aspect-ratio: 1/1;
         padding: 10px;
         border: 3px lightgray solid;

@@ -5,9 +5,9 @@ import { gridStore } from "/src/stores";
 
 import NonoCell from "./NonoCell.svelte";
 import { GameController, SelectionMode } from "/src/Game";
+import { GridHelper } from "/src/Game";
 
 export let controller: GameController
-export let grid: GridData;
 
 let dragSelector = new DragSelector(controller);
 
@@ -19,14 +19,35 @@ let valid = false;
     valid: {valid}
 </h1>
 
-<div class="grid-container" on:mousedown={dragSelector.onMouseDown} on:mousemove={() => valid = dragSelector.isValidSelection()}>
-    {#each $gridStore as column}
-    <div class="grid-column">
-        {#each column as gridCell}
-        <NonoCell gridCell={gridCell} />
+<div class="grid-container">
+    <div class="column-headings">
+        {#each $gridStore as column}
+            <span>
+                {#each GridHelper.getColGroups(column[0].x) as groupNum}
+                {groupNum}<br>
+                {/each}
+            </span>
         {/each}
     </div>
-    {/each}
+    <div class="row-headings">
+        {#each $gridStore[0] as rowCell}
+            <span>
+                {#each GridHelper.getRowGroups(rowCell.y) as groupNum}
+                {groupNum}&nbsp;
+                {/each}
+            </span>
+        {/each}
+    </div>
+
+    <div class="cell-container" on:mousedown={dragSelector.onMouseDown} on:mousemove={() => valid = dragSelector.isValidSelection()}>
+        {#each $gridStore as column}
+        <div class="grid-column">
+            {#each column as gridCell}
+            <NonoCell gridCell={gridCell} />
+            {/each}
+        </div>
+        {/each}
+    </div>
 </div>
 
 <div>
@@ -36,6 +57,35 @@ let valid = false;
 
 <style>
     .grid-container {
+        display: grid;
+        grid-template-rows: 150px 1fr;
+        grid-template-columns: 150px 1fr;
+        grid-template-areas: "x col"
+                             "row cells";
+    }
+
+    .column-headings {
+        grid-area: col;
+        display: flex;
+    }
+    .column-headings > span {
+        width: 100%;
+        text-align: center;
+    }
+
+    .row-headings {
+        grid-area: row;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .row-headings > span {
+        height: 100%;
+        vertical-align: middle;
+    }
+
+    .cell-container {
+        grid-area: cells;
         display: flex;
         flex-direction: row;
     }
@@ -43,5 +93,6 @@ let valid = false;
     .grid-column {
         display: flex;
         flex-direction: column-reverse;
+        width: 100%;
     }
 </style>
