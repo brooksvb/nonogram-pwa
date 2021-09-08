@@ -67,10 +67,12 @@ let valid = false;
     .column-headings {
         grid-area: col;
         display: flex;
+        align-items: flex-end;
     }
     .column-headings > span {
         width: 100%;
         text-align: center;
+        font-size: 1.8em;
     }
 
     .row-headings {
@@ -82,6 +84,8 @@ let valid = false;
     .row-headings > span {
         height: 100%;
         vertical-align: middle;
+        font-size: 1.8em;
+        text-align: right;
     }
 
     .cell-container {
