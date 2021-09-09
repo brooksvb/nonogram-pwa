@@ -106,6 +106,8 @@ import type { GameController, GridCoords, GridSelection } from "./Game";
     };
 
     onTouchEnd = (e: TouchEvent): void => {
+        // Preventing default prevents mouse events from being triggered which doubles the action
+        e.preventDefault();
         document.removeEventListener('touchmove', this.onTouchMove);
         document.removeEventListener('touchend', this.onTouchEnd);
 
