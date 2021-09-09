@@ -5,3 +5,5 @@ import type { GridCell, GridData, GridSelection } from './Game';
 export const gridStore: Writable<GridData> = writable(new Array<Array<GridCell>>());
 
 export const currentSelectionStore: Writable<GridSelection | null> = writable(null);
+
+export const timerStore: Writable<number> = writable(0);

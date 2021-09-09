@@ -2,14 +2,20 @@
 import { GameController } from "/src/Game";
 
 import NonoGrid from "./NonoGrid.svelte";
-import { gridStore } from "/src/stores";
+import { gridStore, timerStore } from "/src/stores";
 import { SelectionMode } from "/src/Game";
 import GameTimer from "./GameTimer.svelte";
 import PauseButton from "./PauseButton.svelte";
+import { onMount } from "svelte";
 
 let controller = new GameController();
 
 controller.startNewGrid()
+
+onMount(() => {
+	$timerStore = 0;
+	controller.startTimer();
+});
 </script>
 
 <!-- <button on:click={() => controller.startNewGrid()}>New Grid</button> -->
@@ -17,7 +23,7 @@ controller.startNewGrid()
 <div class="game-container px-2">
 	<div class="game-header text-3xl">
 		<GameTimer />
-		<PauseButton />
+		<PauseButton {controller} />
 	</div>
 
 	<NonoGrid controller={controller} />

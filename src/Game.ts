@@ -1,4 +1,4 @@
-import { gridStore } from "./stores";
+import { gridStore, timerStore } from "./stores";
 import { get as get_store_value } from 'svelte/store';
 
 /**
@@ -35,8 +35,22 @@ export class GameController {
 
     public selectionMode: SelectionMode = SelectionMode.Marking;
 
+    private timerId = null;
+
     public startNewGrid(): void {
         gridStore.set(GridHelper.generateGrid(10, 10));
+    }
+
+    public startTimer(): void {
+        this.timerId = setInterval(() => {
+            const seconds = get_store_value(timerStore);
+            timerStore.set(seconds + 1);
+        }, 1000);
+    }
+
+    public stopTimer(): void {
+        clearInterval(this.timerId);
+        this.timerId = null;
     }
 
     public applySelection(selection: GridSelection): void {

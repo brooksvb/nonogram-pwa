@@ -17,7 +17,7 @@ import { createEventDispatcher } from "svelte";
 <div id="menu" style={!modalActive ? 'display: none;' : ''}>
 	<h1 class="text-6xl mb-4">Paused</h1>
 	<a href="/" on:click={confirmLeave}>Return to main menu</a>
-	<button id="resume" on:click={() => dispatch('unpause')}
+	<button id="resume" on:click={() => dispatch('resume')}
 		class="bg-green-300 border-2 border-green-400 rounded-md"
 		>Resume Game</button>
 </div>
