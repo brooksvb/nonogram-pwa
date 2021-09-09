@@ -30,7 +30,7 @@ class:selection={isSelected}
     div {
         aspect-ratio: 1/1;
         padding: 10px;
-        border: 3px lightgray solid;
+        border: 2px lightgray solid;
         /* Stop text from being highlighted */
         user-select: none; 
     }
