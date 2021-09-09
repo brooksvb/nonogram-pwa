@@ -20,11 +20,7 @@
 class:marked={gridCell.state === CellState.Marked} 
 class:crossed={gridCell.state === CellState.Crossed}
 class:selection={isSelected}
->
-    <!-- x: {gridCell.x} y: {gridCell.y}
-    <br>
-    State: {gridCell.state} -->
-</div>
+></div>
 
 <style>
     div {
@@ -36,7 +32,7 @@ class:selection={isSelected}
     }
 
     .marked {
-        background-color: lightblue;
+        @apply bg-blue-400;
     }
     
     .crossed {
@@ -44,7 +40,7 @@ class:selection={isSelected}
     }
     
     .selection:not(.marked, .crossed) {
-        background-color: lightskyblue;
+        @apply bg-blue-200;
     }
 
     .selection.crossed, .selection.marked {

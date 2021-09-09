@@ -15,22 +15,23 @@ import { createEventDispatcher } from "svelte";
 
 <div id="backdrop" style={!modalActive ? 'display: none;' : ''}></div>
 <div id="menu" style={!modalActive ? 'display: none;' : ''}>
-	<h1>Paused</h1>
+	<h1 class="text-6xl mb-4">Paused</h1>
 	<a href="/" on:click={confirmLeave}>Return to main menu</a>
-	<button id="resume" on:click={() => dispatch('unpause')}>Resume Game</button>
+	<button id="resume" on:click={() => dispatch('unpause')}
+		class="bg-green-300 border-2 border-green-400 rounded-md"
+		>Resume Game</button>
 </div>
 
-<style>
+<style lang="postcss">
 	h1 {
 		text-transform: uppercase;
 	}
 
 	a {
-		display: block;
+		@apply block text-4xl bg-red-300 p-4 rounded-md;
 	}
 
 	#resume {
-		font-size: 1.5em;	
 		padding: 15px;
 		margin-top: auto;
 		margin-bottom: 30px;
@@ -64,6 +65,5 @@ import { createEventDispatcher } from "svelte";
 		flex-direction: column;
 		align-items: center;
 
-		font-size: 1.8em;
     }
 </style>
