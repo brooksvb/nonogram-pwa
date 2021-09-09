@@ -26,41 +26,6 @@ import type { GameController, GridCoords, GridSelection } from "./Game";
         }
     }
 
-    // TODO: add touch events
-    onMouseDown = (e: MouseEvent): void => {
-        this.initialCoords = this.getGridCoordsFromScreenCoords(e.x, e.y);
-        this.endCoords = this.initialCoords;
-        this.updateSelection();
-
-        // Listen to events until selection done
-        document.addEventListener('mousemove', this.onMouseMove);
-        document.addEventListener('mouseup', this.onMouseUp);
-    };
-
-    onMouseMove = (e: MouseEvent): void => {
-        this.endCoords = this.getGridCoordsFromScreenCoords(e.x, e.y);
-        this.valid = this.isValidSelection();
-        this.updateSelection();
-
-        // Visual feedback for selection
-        
-    }
-
-    onMouseUp = (e: MouseEvent): void => {
-        console.log(this.initialCoords, this.endCoords);
-        document.removeEventListener('mousemove', this.onMouseMove)
-        document.removeEventListener('mouseup', this.onMouseUp)
-        
-        if (this.isValidSelection()) {
-            this.controller.applySelection(this.getGridSelection());
-        }
-
-        this.valid = false;
-        this.initialCoords = null;
-        this.endCoords = null;
-        this.updateSelection();
-    }
-
     /**
      * A valid selection must be in one row or column
      */
@@ -90,4 +55,66 @@ import type { GameController, GridCoords, GridSelection } from "./Game";
         }
     }
 
+    private resetSelection() {
+        this.valid = false;
+        this.initialCoords = null;
+        this.endCoords = null;
+        this.updateSelection();
+    }
+
+     onMouseDown = (e: MouseEvent): void => {
+        this.initialCoords = this.getGridCoordsFromScreenCoords(e.x, e.y);
+        this.endCoords = this.initialCoords;
+        this.updateSelection();
+
+        // Listen to events until selection done
+        document.addEventListener('mousemove', this.onMouseMove);
+        document.addEventListener('mouseup', this.onMouseUp);
+    };
+
+    onMouseMove = (e: MouseEvent): void => {
+        this.endCoords = this.getGridCoordsFromScreenCoords(e.x, e.y);
+        this.valid = this.isValidSelection();
+        this.updateSelection();
+    };
+
+    onMouseUp = (e: MouseEvent): void => {
+        console.log(this.initialCoords, this.endCoords);
+        document.removeEventListener('mousemove', this.onMouseMove)
+        document.removeEventListener('mouseup', this.onMouseUp)
+        
+        if (this.isValidSelection()) {
+            this.controller.applySelection(this.getGridSelection());
+        }
+
+        this.resetSelection();
+    };
+
+    onTouchStart = (e: TouchEvent): void => {
+        this.initialCoords = this.getGridCoordsFromScreenCoords(e.touches[0].pageX, e.touches[0].pageY);
+        this.endCoords = this.initialCoords;
+        this.updateSelection();
+
+        document.addEventListener('touchmove', this.onTouchMove);
+        document.addEventListener('touchend', this.onTouchEnd);
+    };
+    
+    onTouchMove = (e: TouchEvent): void => {
+        this.endCoords = this.getGridCoordsFromScreenCoords(e.touches[0].pageX, e.touches[0].pageY);
+        this.valid = this.isValidSelection();
+        this.updateSelection();
+    };
+
+    onTouchEnd = (e: TouchEvent): void => {
+        document.removeEventListener('touchmove', this.onTouchMove);
+        document.removeEventListener('touchend', this.onTouchEnd);
+
+        if (this.isValidSelection()) {
+            this.controller.applySelection(this.getGridSelection());
+        }
+
+        this.resetSelection();
+    };
+
+    // onTouchEnd
 }

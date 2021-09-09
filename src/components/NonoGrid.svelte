@@ -47,6 +47,7 @@ $: {
 
     <div class="cell-container" 
     on:mousedown={dragSelector.onMouseDown}
+    on:touchstart={dragSelector.onTouchStart}
     >
         {#each $gridStore as column}
         <div class="grid-column">
