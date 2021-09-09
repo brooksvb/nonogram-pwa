@@ -1,14 +1,12 @@
 <script>
 	import PauseMenu from "./PauseMenu.svelte";
-	
+
 	let isPaused = false;
 </script>
 
-<button>Pause</button>
+<button on:click={() => isPaused = !isPaused}>Pause</button>
 
-{#if isPaused}
-<PauseMenu />
-{/if}
+<PauseMenu modalActive={isPaused} on:unpause={() => isPaused = false} />
 
 <style>
 	button {
