@@ -49,12 +49,6 @@ let dragSelector = new DragSelector(controller);
     </div>
 </div>
 
-<div>
-    <button on:click={() => controller.selectionMode = SelectionMode.Marking} class:active={controller.selectionMode === SelectionMode.Marking}>Mark</button>
-    <button on:click={() => controller.selectionMode = SelectionMode.Crossing} class:active={controller.selectionMode === SelectionMode.Crossing}>Cross</button>
-    <button on:click={() => controller.submitSolution()}>Submit</button>
-</div>
-
 <style>
     .grid-container {
         display: grid;
