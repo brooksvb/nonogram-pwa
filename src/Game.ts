@@ -167,6 +167,9 @@ export class GridHelper {
                 counter = 0;
             }
         }
+        if (counter !== 0) {
+            groups.push(counter);
+        }
         return groups;
     }
 
@@ -174,7 +177,8 @@ export class GridHelper {
         const grid = get_store_value(gridStore);
         const groups = [];
         let counter = 0;
-        for (let i = 0; i < grid[0].length; i++) {
+        // Iterate backwards because headings read top-down
+        for (let i = grid[0].length - 1; i >= 0; i--) {
             if (grid[col][i].target) {
                 counter++;
             } else if (counter !== 0) {
@@ -182,6 +186,9 @@ export class GridHelper {
                 groups.push(counter);
                 counter = 0;
             }
+        }
+        if (counter !== 0) {
+            groups.push(counter);
         }
         return groups;
     }
