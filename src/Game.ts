@@ -115,6 +115,22 @@ export class GameController {
         gridStore.set(newGrid);
     }
 
+    public submitSolution() {
+        // Check if solution is correct
+        const grid = get_store_value(gridStore);
+        let hasError = false;
+        hasError = grid.reduce((hasError, col) => {
+            if (hasError) return true;
+            return col.reduce((hasError, cell) => {
+                if (hasError) return true;
+                // If target, just check if marked. Else, anything not marked is okay
+                // In paren is good conditions, negate for return
+                return !(cell.target === true ? cell.state === CellState.Marked : cell.state !== CellState.Marked);
+            }, hasError);
+        }, hasError);
+
+        console.log(hasError);
+    }
 }
 
 export class GridHelper {
