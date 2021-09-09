@@ -87,7 +87,7 @@ $: {
     .row-headings {
         grid-area: row;
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
 
     .row-headings > span {
