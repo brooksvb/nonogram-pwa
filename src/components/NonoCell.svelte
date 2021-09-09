@@ -42,7 +42,11 @@ class:selection={isSelected}
         background-color: purple;
     }
     
-    .selection {
+    .selection:not(.marked, .crossed) {
         background-color: blue;
+    }
+
+    .selection.crossed, .selection.marked {
+        filter: brightness(.8);
     }
 </style>
