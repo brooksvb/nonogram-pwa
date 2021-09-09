@@ -11,19 +11,7 @@ export let controller: GameController
 
 let dragSelector = new DragSelector(controller);
 
-
-let valid = false;
-$: {
-    if ($currentSelectionStore !== null) {
-        valid = $currentSelectionStore.valid;
-    } else valid = false;
-}
-
 </script>
-
-<h1>
-    valid: {valid}
-</h1>
 
 <div class="grid-container">
     <div class="column-headings">
