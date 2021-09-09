@@ -1,4 +1,4 @@
-import { currentSelectionStore, gridStore } from "./stores";
+import { gridStore } from "./stores";
 import { get as get_store_value } from 'svelte/store';
 
 /**
