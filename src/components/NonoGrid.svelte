@@ -37,11 +37,13 @@ $: {
     </div>
     <div class="row-headings">
         {#each $gridStore[0] as rowCell}
+            <div>
             <span>
                 {#each GridHelper.getRowGroups(rowCell.y) as groupNum}
                 {groupNum}&nbsp;
                 {/each}
             </span>
+            </div>
         {/each}
     </div>
 
@@ -91,11 +93,14 @@ $: {
         flex-direction: column-reverse;
     }
 
-    .row-headings > span {
+    .row-headings > div {
         height: 100%;
         vertical-align: middle;
         font-size: 1.8em;
         text-align: right;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
     }
 
     .cell-container {
