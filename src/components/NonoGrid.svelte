@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { GridData } from "/src/Game";
 import { DragSelector } from "/src/Game";
-import { gridStore } from "/src/stores";
+import { gridStore, currentSelectionStore } from "/src/stores";
 
 import NonoCell from "./NonoCell.svelte";
 import { GameController, SelectionMode } from "/src/Game";
@@ -11,7 +11,13 @@ export let controller: GameController
 
 let dragSelector = new DragSelector(controller);
 
+
 let valid = false;
+$: {
+    if ($currentSelectionStore !== null) {
+        valid = $currentSelectionStore.valid;
+    } else valid = false;
+}
 
 </script>
 
@@ -39,7 +45,9 @@ let valid = false;
         {/each}
     </div>
 
-    <div class="cell-container" on:mousedown={dragSelector.onMouseDown} on:mousemove={() => valid = dragSelector.isValidSelection()}>
+    <div class="cell-container" 
+    on:mousedown={dragSelector.onMouseDown}
+    >
         {#each $gridStore as column}
         <div class="grid-column">
             {#each column as gridCell}
