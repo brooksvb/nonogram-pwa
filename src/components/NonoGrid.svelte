@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { GridData } from "/src/Game";
-import { DragSelector } from "/src/Game";
+import { DragSelector } from "/src/DragSelector";
 import { gridStore, currentSelectionStore } from "/src/stores";
 
 import NonoCell from "./NonoCell.svelte";
