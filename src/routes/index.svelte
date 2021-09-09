@@ -1,6 +1,5 @@
-<script>
-import NonoGame from "/src/components/NonoGame.svelte";
 
-</script>
+<h1>NonoGame</h1>
+<p>Welcome to NonoGame</p>
 
-<NonoGame />
+<a href="game">Play Game</a>
