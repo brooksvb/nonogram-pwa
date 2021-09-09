@@ -192,6 +192,18 @@ export class GridHelper {
         }
         return groups;
     }
+
+    public static printGridSolution(): void {
+        const grid = get_store_value(gridStore); 
+        let solution = '';
+        for (let y = grid[0].length - 1; y >= 0; y--) {
+            for (let x = 0; x < grid.length; x++) {
+                solution += grid[x][y].target ? 'X ' : 'o ';
+            }
+            solution += '\n';
+        }
+        console.log(solution);
+    };
 }
 
 export interface GridSelection {
