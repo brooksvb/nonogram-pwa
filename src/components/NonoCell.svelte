@@ -14,6 +14,7 @@
             isSelected = GridHelper.coordsAreInSelection(gridCell.x, gridCell.y, $currentSelectionStore);
         }
     }
+
 </script>
 <div data-x={gridCell.x} data-y={gridCell.y} 
 class:marked={gridCell.state === CellState.Marked} 
@@ -39,11 +40,11 @@ class:selection={isSelected}
     }
     
     .crossed {
-        background-color: purple;
+        background-image: url('/crossmark.svg');
     }
     
     .selection:not(.marked, .crossed) {
-        background-color: blue;
+        background-color: lightskyblue;
     }
 
     .selection.crossed, .selection.marked {
