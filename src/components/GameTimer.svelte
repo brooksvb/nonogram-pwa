@@ -6,7 +6,9 @@
 	$: {
 		let date = new Date(null);
 		date.setSeconds($timerStore);
-		time = date.toISOString().substr(14, 5);
+		let minutes = String(date.getMinutes()).padStart(2, '0');
+		let seconds = String(date.getSeconds()).padStart(2, '0');
+		time = `${minutes}:${seconds}`;
 	}
 </script>
 
