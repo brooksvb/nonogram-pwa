@@ -37,8 +37,8 @@ export class GameController {
 
     private timerId = null;
 
-    public startNewGrid(): void {
-        gridStore.set(GridHelper.generateGrid(10, 10));
+    public startNewGrid(width = 5, height = 5): void {
+        gridStore.set(GridHelper.generateGrid(width, height));
     }
 
     public startTimer(): void {

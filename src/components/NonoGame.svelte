@@ -10,7 +10,9 @@ import { onMount } from "svelte";
 
 let controller = new GameController();
 
-controller.startNewGrid()
+export let rows;
+export let cols;
+controller.startNewGrid(cols, rows);
 
 onMount(() => {
 	$timerStore = 0;
