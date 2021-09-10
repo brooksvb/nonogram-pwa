@@ -79,7 +79,6 @@ import type { GameController, GridCoords, GridSelection } from "./Game";
     };
 
     onMouseUp = (e: MouseEvent): void => {
-        console.log(this.initialCoords, this.endCoords);
         document.removeEventListener('mousemove', this.onMouseMove)
         document.removeEventListener('mouseup', this.onMouseUp)
         
