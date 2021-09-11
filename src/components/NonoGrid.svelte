@@ -13,8 +13,8 @@ let dragSelector = new DragSelector(controller);
 
 </script>
 
-<div class="grid-container">
-    <div class="column-headings">
+<div id="grid-container">
+    <div id="column-headings">
         {#each $gridStore as column}
             <span>
                 {#each GridHelper.getColGroups(column[0].x) as groupNum}
@@ -23,7 +23,7 @@ let dragSelector = new DragSelector(controller);
             </span>
         {/each}
     </div>
-    <div class="row-headings">
+    <div id="row-headings">
         {#each $gridStore[0] as rowCell}
             <div>
             <span>
@@ -35,7 +35,7 @@ let dragSelector = new DragSelector(controller);
         {/each}
     </div>
 
-    <div class="cell-container" 
+    <div id="cell-container" 
     on:mousedown={dragSelector.onMouseDown}
     on:touchstart={dragSelector.onTouchStart}
     >
@@ -49,8 +49,8 @@ let dragSelector = new DragSelector(controller);
     </div>
 </div>
 
-<style>
-    .grid-container {
+<style lang="postcss">
+    #grid-container {
         display: grid;
         grid-template-rows: fit-content(100px) 1fr;
         grid-template-columns: fit-content(150px) 1fr;
@@ -58,34 +58,36 @@ let dragSelector = new DragSelector(controller);
                              "row cells";
     }
 
-    .column-headings {
+    #column-headings, #row-headings {
+        @apply text-xl sm:text-3xl md:text-4xl;
+    }
+
+    #column-headings {
         grid-area: col;
         display: flex;
         align-items: flex-end;
     }
-    .column-headings > span {
+    #column-headings > span {
         width: 100%;
         text-align: center;
-        font-size: 1.8em;
     }
 
-    .row-headings {
+    #row-headings {
         grid-area: row;
         display: flex;
         flex-direction: column-reverse;
     }
 
-    .row-headings > div {
+    #row-headings > div {
         height: 100%;
         vertical-align: middle;
-        font-size: 1.8em;
         text-align: right;
         display: flex;
         justify-content: flex-end;
         align-items: center;
     }
 
-    .cell-container {
+    #cell-container {
         grid-area: cells;
         display: flex;
         flex-direction: row;
