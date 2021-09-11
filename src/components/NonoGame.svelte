@@ -18,6 +18,18 @@ onMount(() => {
 	$timerStore = 0;
 	controller.startTimer();
 });
+
+const submitSolution = () => {
+	if (controller.checkSolution()) {
+		// Grid complete
+		// Show summary, completed in x time
+		// Button to play again or return to main menu
+	} else {
+		// Show message
+		// Shake a little
+		// Grid has errors
+	}
+};
 </script>
 
 <!-- <button on:click={() => controller.startNewGrid()}>New Grid</button> -->
@@ -33,7 +45,7 @@ onMount(() => {
 	<div class="game-footer flex justify-center items-center">
 		<button on:click={() => controller.selectionMode = SelectionMode.Marking} class:active={controller.selectionMode === SelectionMode.Marking}>Mark</button>
 		<button on:click={() => controller.selectionMode = SelectionMode.Crossing} class:active={controller.selectionMode === SelectionMode.Crossing}>Cross</button>
-		<button on:click={() => controller.submitSolution()}>Submit</button>
+		<button on:click={submitSolution}>Submit</button>
 	</div>
 </div>
 

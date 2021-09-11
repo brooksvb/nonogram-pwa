@@ -129,7 +129,7 @@ export class GameController {
         gridStore.set(newGrid);
     }
 
-    public submitSolution() {
+    public checkSolution(): boolean {
         // Check if solution is correct
         const grid = get_store_value(gridStore);
         let hasError = false;
@@ -143,7 +143,7 @@ export class GameController {
             }, hasError);
         }, hasError);
 
-        console.log(hasError);
+        return hasError;
     }
 }
 
