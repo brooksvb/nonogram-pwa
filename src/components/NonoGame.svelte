@@ -34,39 +34,55 @@ const submitSolution = () => {
 
 <!-- <button on:click={() => controller.startNewGrid()}>New Grid</button> -->
 
-<div class="game-container px-2">
-	<div class="game-header text-3xl">
+<div id="game-container" class="px-2 h-screen">
+	<div class="flex items-center justify-end text-3xl">
 		<GameTimer />
 		<PauseButton {controller} />
 	</div>
 
-	<NonoGrid controller={controller} />
+	<div class="h-full">
+		<div class="h-auto flex-shrink">
+			<NonoGrid controller={controller} />
+		</div>
+	</div>
 
-	<div class="game-footer flex justify-center items-center">
-		<button on:click={() => controller.selectionMode = SelectionMode.Marking} class:active={controller.selectionMode === SelectionMode.Marking}>Mark</button>
-		<button on:click={() => controller.selectionMode = SelectionMode.Crossing} class:active={controller.selectionMode === SelectionMode.Crossing}>Cross</button>
-		<button on:click={submitSolution}>Submit</button>
+	<div id="game-footer" class="flex justify-center items-center py-2">
+		<button class="invisible mr-auto ml-16">Submit</button>
+		<button id="mark-button" class="mx-2" on:click={() => controller.selectionMode = SelectionMode.Marking} class:active={controller.selectionMode === SelectionMode.Marking}><div></div></button>
+		<button id="cross-button" class="mx-2" on:click={() => controller.selectionMode = SelectionMode.Crossing} class:active={controller.selectionMode === SelectionMode.Crossing}></button>
+		<button on:click={submitSolution} class="ml-auto mr-16">Submit</button>
 	</div>
 </div>
 
-<style>
-	.game-container {
-		display: grid;
-		grid-template-rows: 1fr 4fr 1fr;
-		max-height: 100vh
+<style lang="postcss">
+	#game-container {
+		@apply flex flex-col h-screen;
 	}
 
-	.game-header {
-		display: flex;
-		align-items: center;
-		justify-content: flex-end;
+	#game-footer > button {
+		@apply bg-gray-300 border-gray-400 rounded-md text-lg p-4 h-full;
 	}
 
-	.game-footer > button {
-		@apply bg-gray-300 border-gray-400 rounded-md text-2xl p-4 mx-2;
+	#mark-button, #cross-button {
+		aspect-ratio: 1/1;
 	}
 
-	.game-footer > button.active {
+	#game-footer > button.active {
 		@apply bg-red-400;
+	}
+
+	#mark-button > div {
+		width: 100%;
+		height: 100%;
+		background-image: url("pencil-pictogram.svg");
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: contain;
+	}
+
+	#cross-button {
+		background-image: url("crossmark.svg");
+		background-position: center;
+		background-repeat: no-repeat;
 	}
 </style>
