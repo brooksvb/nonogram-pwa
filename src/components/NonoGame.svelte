@@ -35,18 +35,18 @@ const submitSolution = () => {
 <!-- <button on:click={() => controller.startNewGrid()}>New Grid</button> -->
 
 <div id="game-container" class="px-2 h-screen">
-	<div class="flex items-center justify-end text-3xl">
+	<div id="game-header" class="flex flex-shrink-0 flex-grow-0 items-center justify-end text-3xl">
 		<GameTimer />
 		<PauseButton {controller} />
 	</div>
 
-	<div class="h-full">
-		<div class="h-auto flex-shrink">
+	<div class="flex-shrink my-auto">
+		<div class="h-auto">
 			<NonoGrid controller={controller} />
 		</div>
 	</div>
 
-	<div id="game-footer" class="flex justify-center items-center py-2">
+	<div id="game-footer" class="flex flex-shrink-0 flex-grow-0 justify-center items-center py-2">
 		<button class="invisible mr-auto ml-16">Submit</button>
 		<button id="mark-button" class="mx-2" on:click={() => controller.selectionMode = SelectionMode.Marking} class:active={controller.selectionMode === SelectionMode.Marking}><div></div></button>
 		<button id="cross-button" class="mx-2" on:click={() => controller.selectionMode = SelectionMode.Crossing} class:active={controller.selectionMode === SelectionMode.Crossing}></button>
@@ -57,6 +57,10 @@ const submitSolution = () => {
 <style lang="postcss">
 	#game-container {
 		@apply flex flex-col h-screen;
+	}
+
+	#game-header, #game-footer {
+		height: 10vh;
 	}
 
 	#game-footer > button {
