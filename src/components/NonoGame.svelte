@@ -88,10 +88,11 @@ const removeMessageAfterDelay = () => {
 	}
 
 	#submit-button {
-		@apply bg-blue-500 text-2xl !important;
+		@apply bg-blue-300 active:bg-blue-400 text-2xl !important;
 	}
 
 	#mark-button, #cross-button {
+		@apply active:bg-yellow-400;
 		aspect-ratio: 1/1;
 	}
 
