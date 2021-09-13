@@ -97,14 +97,14 @@ const removeMessageAfterDelay = () => {
 	#mark-button > div {
 		width: 100%;
 		height: 100%;
-		background-image: url("pencil-pictogram.svg");
+		background-image: url("/pencil-pictogram.svg");
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: contain;
 	}
 
 	#cross-button {
-		background-image: url("crossmark.svg");
+		background-image: url("/crossmark.svg");
 		background-position: center;
 		background-repeat: no-repeat;
 	}
