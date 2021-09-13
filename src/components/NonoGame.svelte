@@ -1,17 +1,23 @@
 <script>
-import { GameController } from "/src/Game";
+import { GameController, SelectionMode } from "/src/Game";
+import { timerStore } from "/src/stores";
+import { onMount } from "svelte";
+import { fade, fly } from "svelte/transition";
 
 import NonoGrid from "./NonoGrid.svelte";
-import { gridStore, timerStore } from "/src/stores";
-import { SelectionMode } from "/src/Game";
 import GameTimer from "./GameTimer.svelte";
 import PauseButton from "./PauseButton.svelte";
-import { onMount } from "svelte";
+import GameWinModal from "./GameWinModal.svelte";
 
 let controller = new GameController();
 
 export let rows;
 export let cols;
+
+let displayIncompleteMessage = false;
+let gameWin = false;
+let completionTime = null;
+
 controller.startNewGrid(cols, rows);
 
 onMount(() => {
@@ -20,22 +26,35 @@ onMount(() => {
 });
 
 const submitSolution = () => {
-	if (controller.checkSolution()) {
+	if (controller.solutionIsValid()) {
 		// Grid complete
-		// Show summary, completed in x time
-		// Button to play again or return to main menu
+		controller.stopTimer();
+		completionTime = $timerStore;
+		gameWin = true;
 	} else {
 		// Show message
-		// Shake a little
-		// Grid has errors
+		displayIncompleteMessage = true;
+		removeMessageAfterDelay();
 	}
 };
+
+const removeMessageAfterDelay = () => {
+	// After 3 seconds, remove popup message
+	setTimeout(() => {
+		displayIncompleteMessage = false;
+	}, 3000);
+}
 </script>
 
-<!-- <button on:click={() => controller.startNewGrid()}>New Grid</button> -->
+{#if gameWin}
+<GameWinModal {completionTime} />
+{/if}
 
 <div id="game-container" class="px-2 h-screen">
 	<div id="game-header" class="flex flex-shrink-0 flex-grow-0 items-center justify-end text-3xl">
+		{#if displayIncompleteMessage}
+		<span class="ml-4 mr-auto px-4 py-2 text-xl rounded-sm bg-yellow-200" in:fly={{ y: -50, duration: 1000 }} out:fade>Puzzle is not yet complete</span>
+		{/if}
 		<GameTimer />
 		<PauseButton {controller} />
 	</div>

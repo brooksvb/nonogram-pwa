@@ -129,7 +129,7 @@ export class GameController {
         gridStore.set(newGrid);
     }
 
-    public checkSolution(): boolean {
+    public solutionIsValid(): boolean {
         // Check if solution is correct
         const grid = get_store_value(gridStore);
         let hasError = false;
@@ -143,7 +143,7 @@ export class GameController {
             }, hasError);
         }, hasError);
 
-        return hasError;
+        return !hasError;
     }
 }
 
@@ -235,6 +235,7 @@ export class GridHelper {
         console.log(solution);
     };
 }
+(window as any).printGridSolution = GridHelper.printGridSolution;
 
 export interface GridSelection {
     startCoord: {
