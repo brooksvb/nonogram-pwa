@@ -53,8 +53,9 @@ const removeMessageAfterDelay = () => {
 <div id="game-container" class="px-2 h-screen">
 	<div id="game-header" class="flex flex-shrink-0 flex-grow-0 items-center justify-end text-3xl">
 		{#if displayIncompleteMessage}
-		<span class="ml-4 mr-auto px-4 py-2 text-xl rounded-sm bg-yellow-200" in:fly={{ y: -50, duration: 1000 }} out:fade>Puzzle is not yet complete</span>
+		<span class="inline-block fixed top-2 left-2 sm:relative sm:top-0 sm:left-0 sm:ml-4 sm:mr-auto px-4 py-2 text-xl rounded-sm bg-yellow-200" in:fly={{ y: -50, duration: 1000 }} out:fade>Puzzle is not yet complete</span>
 		{/if}
+
 		<GameTimer />
 		<PauseButton {controller} />
 	</div>
