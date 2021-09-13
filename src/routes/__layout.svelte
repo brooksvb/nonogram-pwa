@@ -7,3 +7,10 @@
 </svelte:head>
 
 <slot />
+
+<style>
+	:global(body) {
+		/* Disables pull-to-refresh but allows overscroll glow effects. */
+		overscroll-behavior-y: contain;
+	}
+</style>
