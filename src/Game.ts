@@ -235,7 +235,6 @@ export class GridHelper {
         console.log(solution);
     };
 }
-(window as any).printGridSolution = GridHelper.printGridSolution;
 
 export interface GridSelection {
     startCoord: {
