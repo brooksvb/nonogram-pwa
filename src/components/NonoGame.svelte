@@ -69,7 +69,7 @@ const removeMessageAfterDelay = () => {
 		<button class="invisible mr-auto ml-16">Submit</button>
 		<button id="mark-button" class="mx-2" on:click={() => controller.selectionMode = SelectionMode.Marking} class:active={controller.selectionMode === SelectionMode.Marking}><div></div></button>
 		<button id="cross-button" class="mx-2" on:click={() => controller.selectionMode = SelectionMode.Crossing} class:active={controller.selectionMode === SelectionMode.Crossing}></button>
-		<button on:click={submitSolution} class="ml-auto mr-16">Submit</button>
+		<button id="submit-button" on:click={submitSolution} class="ml-auto mr-16">Submit</button>
 	</div>
 </div>
 
@@ -83,7 +83,11 @@ const removeMessageAfterDelay = () => {
 	}
 
 	#game-footer > button {
-		@apply bg-gray-300 border-gray-400 rounded-md text-lg p-4 h-full;
+		@apply bg-gray-300 border border-gray-400 rounded-md text-lg p-4 h-full;
+	}
+
+	#submit-button {
+		@apply bg-blue-500 text-2xl !important;
 	}
 
 	#mark-button, #cross-button {
@@ -91,7 +95,7 @@ const removeMessageAfterDelay = () => {
 	}
 
 	#game-footer > button.active {
-		@apply bg-red-400;
+		@apply bg-yellow-500;
 	}
 
 	#mark-button > div {

@@ -52,8 +52,8 @@ let dragSelector = new DragSelector(controller);
 <style lang="postcss">
     #grid-container {
         display: grid;
-        grid-template-rows: fit-content(100px) 1fr;
-        grid-template-columns: fit-content(150px) 1fr;
+        grid-template-rows: max-content 1fr;
+        grid-template-columns: max-content 1fr;
         grid-template-areas: "x col"
                              "row cells";
     }

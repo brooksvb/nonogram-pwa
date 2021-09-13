@@ -12,5 +12,6 @@
 	:global(body) {
 		/* Disables pull-to-refresh but allows overscroll glow effects. */
 		overscroll-behavior-y: contain;
+		background-color: #fff7f0;
 	}
 </style>

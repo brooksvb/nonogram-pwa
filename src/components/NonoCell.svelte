@@ -27,6 +27,7 @@ class:selection={isSelected}
         aspect-ratio: 1/1;
         padding: 10px;
         border: 2px lightgray solid;
+        background-color: white;
         /* Stop text from being highlighted */
         user-select: none; 
     }
