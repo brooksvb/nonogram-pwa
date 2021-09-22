@@ -1,4 +1,6 @@
 <script lang="ts">
+import { onMount } from "svelte";
+
 import type { GridData } from "/src/Game";
 import { DragSelector } from "/src/DragSelector";
 import { gridStore, currentSelectionStore } from "/src/stores";
@@ -11,46 +13,89 @@ export let controller: GameController
 
 let dragSelector = new DragSelector(controller);
 
+// DOM Elements
+let gridSlot;
+let columnHeadings;
+let rowHeadings;
+
+// This function calculates the size of cells based on screen space
+const resizeCells = () => {
+    // Max height and width available
+    let maxHeight = gridSlot.clientHeight;
+    let maxWidth = gridSlot.clientWidth;
+
+    // Get height of col headers
+    let colHeaderHeight = columnHeadings.clientHeight;
+
+    // Get width of row headers
+    let rowHeaderWidth = rowHeadings.clientWidth;
+
+    // Height for grid / rows = cell height
+    let availableHeight = (maxHeight - colHeaderHeight) / 5;
+    // Width of grid / cols = cell width
+    let availableWidth = (maxWidth - rowHeaderWidth) / 5;
+
+    // Choose smallest for both dimensions to make square
+    let targetCellSize = (availableHeight < availableWidth ? availableHeight : availableWidth) + 'px';
+
+    console.log(`Resizing to target: ${targetCellSize}`);
+
+    [...document.getElementsByClassName('grid-column')].forEach((colElem) => {
+        colElem.style.width = targetCellSize;
+    });
+}
+
+onMount(() => resizeCells());
+
 </script>
+<svelte:window on:resize={resizeCells}></svelte:window>
 
-<div id="grid-container">
-    <div id="column-headings">
-        {#each $gridStore as column}
-            <span>
-                {#each GridHelper.getColGroups(column[0].x) as groupNum}
-                {groupNum}<br>
-                {/each}
-            </span>
-        {/each}
-    </div>
-    <div id="row-headings">
-        {#each $gridStore[0] as rowCell}
-            <div>
-            <span>
-                {#each GridHelper.getRowGroups(rowCell.y) as groupNum}
-                {groupNum}&nbsp;
-                {/each}
-            </span>
-            </div>
-        {/each}
-    </div>
-
-    <div id="cell-container" 
-    on:mousedown={dragSelector.onMouseDown}
-    on:touchstart={dragSelector.onTouchStart}
-    >
-        {#each $gridStore as column}
-        <div class="grid-column">
-            {#each column as gridCell}
-            <NonoCell gridCell={gridCell} />
+<div id="grid-slot" class="flex" bind:this={gridSlot}>
+    <div id="grid-container">
+        <div id="column-headings" bind:this={columnHeadings}>
+            {#each $gridStore as column}
+                <span>
+                    {#each GridHelper.getColGroups(column[0].x) as groupNum}
+                    {groupNum}<br>
+                    {/each}
+                </span>
             {/each}
         </div>
-        {/each}
+        <div id="row-headings" bind:this={rowHeadings}>
+            {#each $gridStore[0] as rowCell}
+                <div>
+                <span>
+                    {#each GridHelper.getRowGroups(rowCell.y) as groupNum}
+                    {groupNum}&nbsp;
+                    {/each}
+                </span>
+                </div>
+            {/each}
+        </div>
+
+        <div id="cell-container" 
+        on:mousedown={dragSelector.onMouseDown}
+        on:touchstart={dragSelector.onTouchStart}
+        >
+            {#each $gridStore as column}
+            <div class="grid-column">
+                {#each column as gridCell}
+                <NonoCell gridCell={gridCell} />
+                {/each}
+            </div>
+            {/each}
+        </div>
     </div>
 </div>
 
 <style lang="postcss">
+    #grid-slot {
+        height: 80vh;
+    }
     #grid-container {
+        max-height: 80vh;
+        width: min-content;
+        margin: auto;
         display: grid;
         grid-template-rows: max-content 1fr;
         grid-template-columns: max-content 1fr;
@@ -96,6 +141,6 @@ let dragSelector = new DragSelector(controller);
     .grid-column {
         display: flex;
         flex-direction: column-reverse;
-        width: 100%;
+        width: 50px;
     }
 </style>

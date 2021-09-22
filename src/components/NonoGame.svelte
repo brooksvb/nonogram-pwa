@@ -60,11 +60,7 @@ const removeMessageAfterDelay = () => {
 		<PauseButton {controller} />
 	</div>
 
-	<div class="flex-shrink my-auto">
-		<div class="h-auto">
-			<NonoGrid controller={controller} />
-		</div>
-	</div>
+	<NonoGrid controller={controller} />
 
 	<div id="game-footer" class="flex flex-shrink-0 flex-grow-0 justify-center items-center py-2">
 		<button class="invisible mr-auto ml-16">Submit</button>
