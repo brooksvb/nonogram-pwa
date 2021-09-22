@@ -63,10 +63,10 @@ const removeMessageAfterDelay = () => {
 	<NonoGrid controller={controller} />
 
 	<div id="game-footer" class="flex flex-shrink-0 flex-grow-0 justify-center items-center py-2">
-		<button class="invisible mr-auto ml-16">Submit</button>
+		<button class="hidden sm:block invisible mr-auto ml-16">Submit</button>
 		<button id="mark-button" class="mx-2" on:click={() => controller.selectionMode = SelectionMode.Marking} class:active={controller.selectionMode === SelectionMode.Marking}><div></div></button>
 		<button id="cross-button" class="mx-2" on:click={() => controller.selectionMode = SelectionMode.Crossing} class:active={controller.selectionMode === SelectionMode.Crossing}></button>
-		<button id="submit-button" on:click={submitSolution} class="ml-auto mr-16">Submit</button>
+		<button id="submit-button" on:click={submitSolution} class="mx-2 sm:ml-auto sm:mr-16">Submit</button>
 	</div>
 </div>
 
@@ -83,7 +83,7 @@ const removeMessageAfterDelay = () => {
 		@apply bg-gray-300 border border-gray-400 rounded-md text-lg p-4 h-full;
 	}
 
-	#submit-button {
+	#submit-button, #game-footer > button.hidden {
 		@apply bg-blue-300 active:bg-blue-400 text-2xl !important;
 	}
 
