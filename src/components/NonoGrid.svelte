@@ -17,6 +17,7 @@ let dragSelector = new DragSelector(controller);
 let gridSlot;
 let columnHeadings;
 let rowHeadings;
+let gridColumns = [];
 
 // This function calculates the size of cells based on screen space
 const resizeCells = () => {
@@ -37,7 +38,7 @@ const resizeCells = () => {
 
     // console.log(`Resizing to target: ${targetCellSize}`);
 
-    [...document.getElementsByClassName('grid-column')].forEach((colElem) => {
+    gridColumns.forEach((colElem) => {
         colElem.style.width = targetCellSize;
     });
 }
@@ -75,8 +76,8 @@ onMount(() => resizeCells());
         on:mousedown={dragSelector.onMouseDown}
         on:touchstart={dragSelector.onTouchStart}
         >
-            {#each $gridStore as column}
-            <div class="grid-column">
+            {#each $gridStore as column, i}
+            <div class="grid-column" bind:this={gridColumns[i]}>
                 {#each column as gridCell}
                 <NonoCell gridCell={gridCell} />
                 {/each}
