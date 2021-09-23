@@ -33,11 +33,20 @@ export enum SelectionMode {
 
 export class GameController {
 
+    private rows = 5;
+    private cols = 5;
+
+    public getRows(): number { return this.rows; }
+    public getCols(): number { return this.cols; }
+
     public selectionMode: SelectionMode = SelectionMode.Marking;
 
     private timerId = null;
 
     public startNewGrid(width = 5, height = 5): void {
+        // Store size of last grid so it can be accessed in NonoGrid
+        this.rows = height;
+        this.cols = width;
         gridStore.set(GridHelper.generateGrid(width, height));
     }
 
