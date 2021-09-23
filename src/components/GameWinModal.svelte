@@ -9,7 +9,7 @@
 
 </script>
 
-<div class="w-screen h-screen flex flex-col justify-center items-center">
+<div class="w-screen h-screen fixed z-10 flex flex-col justify-center items-center bg-yellow-300">
 	<h1 class="text-4xl mb-4">You completed this nonogram!</h1>
 	<p class="text-2xl">Your completion time: <span class="text-green-500">{completionTimeString}</span></p>
 
