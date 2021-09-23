@@ -24,21 +24,18 @@ const resizeCells = () => {
     let maxHeight = gridSlot.clientHeight;
     let maxWidth = gridSlot.clientWidth;
 
-    // Get height of col headers
+    // Get height and width occupied by headers
     let colHeaderHeight = columnHeadings.clientHeight;
-
-    // Get width of row headers
     let rowHeaderWidth = rowHeadings.clientWidth;
 
-    // Height for grid / rows = cell height
-    let availableHeight = (maxHeight - colHeaderHeight) / 5;
-    // Width of grid / cols = cell width
-    let availableWidth = (maxWidth - rowHeaderWidth) / 5;
+    // Divide remaining space among rows and cols
+    let availableHeight = (maxHeight - colHeaderHeight) / controller.getRows();
+    let availableWidth = (maxWidth - rowHeaderWidth) / controller.getCols();
 
     // Choose smallest for both dimensions to make square
     let targetCellSize = (availableHeight < availableWidth ? availableHeight : availableWidth) + 'px';
 
-    console.log(`Resizing to target: ${targetCellSize}`);
+    // console.log(`Resizing to target: ${targetCellSize}`);
 
     [...document.getElementsByClassName('grid-column')].forEach((colElem) => {
         colElem.style.width = targetCellSize;
@@ -48,6 +45,7 @@ const resizeCells = () => {
 onMount(() => resizeCells());
 
 </script>
+
 <svelte:window on:resize={resizeCells}></svelte:window>
 
 <div id="grid-slot" class="flex" bind:this={gridSlot}>
@@ -93,9 +91,8 @@ onMount(() => resizeCells());
         height: 80vh;
     }
     #grid-container {
-        max-height: 80vh;
-        width: min-content;
-        margin: auto;
+        width: min-content; /* Needed to scale down column headers with cell size */
+        margin: auto; /* Centers horizontally and vertically (thanks to flex grid-slot) */
         display: grid;
         grid-template-rows: max-content 1fr;
         grid-template-columns: max-content 1fr;
