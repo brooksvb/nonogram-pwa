@@ -103,6 +103,7 @@ onMount(() => resizeCells());
 
     #column-headings, #row-headings {
         @apply text-xl sm:text-3xl md:text-4xl;
+        font-family: monospace, serif;
     }
 
     #column-headings {
