@@ -15,27 +15,18 @@ import { createEventDispatcher } from "svelte";
 
 <div id="backdrop" style={!modalActive ? 'display: none;' : ''}></div>
 <div id="menu" style={!modalActive ? 'display: none;' : ''}>
-	<h1 class="text-6xl mb-4">Paused</h1>
-	<a href="/" on:click={confirmLeave}>Return to main menu</a>
-	<button id="resume" on:click={() => dispatch('resume')}
-		class="bg-green-300 border-2 border-green-400 rounded-md"
-		>Resume Game</button>
+	<h1 class="text-6xl mb-4 uppercase">Paused</h1>
+
+	<div class="flex flex-col h-full justify-center align-middle gap-8">
+		<a href="/" class="block text-4xl bg-red-300 p-4 rounded-md" on:click={confirmLeave}>Return to main menu</a>
+		<button on:click={() => dispatch('resume')}
+			class="text-4xl p-4 bg-green-300 border-2 border-green-400 rounded-md"
+			>Resume Game</button>
+	</div>
+
 </div>
 
 <style lang="postcss">
-	h1 {
-		text-transform: uppercase;
-	}
-
-	a {
-		@apply block text-4xl bg-red-300 p-4 rounded-md;
-	}
-
-	#resume {
-		padding: 15px;
-		margin-top: auto;
-		margin-bottom: 30px;
-	}
 
 	#backdrop {
 		position: fixed;
