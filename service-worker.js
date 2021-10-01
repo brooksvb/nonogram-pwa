@@ -1,4 +1,4 @@
-const timestamp = 1633127330581;
+const timestamp = 1633127383857;
 const build = [
   "/nonogram-pwa/app/start-db759ecd.js",
   "/nonogram-pwa/app/assets/start-464e9d0a.css",
