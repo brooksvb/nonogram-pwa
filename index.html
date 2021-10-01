@@ -9,7 +9,7 @@
 
 		
 
-		<link rel="modulepreload" href="/nonogram-pwa/_app/start-c7bfce50.js">
+		<link rel="modulepreload" href="/nonogram-pwa/_app/start-f2c1739e.js">
 		<link rel="modulepreload" href="/nonogram-pwa/_app/chunks/vendor-af053b12.js">
 		<link rel="modulepreload" href="/nonogram-pwa/_app/pages/__layout.svelte-9c9c6375.js">
 		<link rel="modulepreload" href="/nonogram-pwa/_app/pages/index.svelte-54cc58c6.js">
@@ -18,10 +18,10 @@
 		<link rel="stylesheet" href="/nonogram-pwa/_app/assets/pages/index.svelte-d1a1a9de.css">
 
 		<script type="module">
-			import { start } from "/nonogram-pwa/_app/start-c7bfce50.js";
+			import { start } from "/nonogram-pwa/_app/start-f2c1739e.js";
 			start({
 				target: document.querySelector("#svelte"),
-				paths: {"base":"/nonogram-pwa","assets":""},
+				paths: {"base":"/nonogram-pwa","assets":"/nonogram-pwa"},
 				session: {},
 				host: location.host,
 				route: true,
@@ -59,18 +59,18 @@
 
 	<div class="inline-block bg-blue-200 p-8 shadow-xl"><h4>Set size of grid and click Play</h4>
 
-		<div class="flex justify-center items-center mt-4"><div class="inline-flex flex-col items-end mr-4"><div class="mb-2"><label for="rows">Rows</label>
-					<input class="text-center" name="rows" type="number" min="5" max="15" value="5"></div>
-				<div><label for="cols">Columns</label>
-					<input class="text-center" name="cols" type="number" min="5" max="15" value="5"></div></div>
+<div class="flex justify-center items-center mt-4"><div class="inline-flex flex-col items-end mr-4"><div class="mb-2"><label for="rows">Rows</label>
+			<input class="text-center" name="rows" type="number" min="5" max="15" value="5"></div>
+		<div><label for="cols">Columns</label>
+			<input class="text-center" name="cols" type="number" min="5" max="15" value="5"></div></div>
 	
-			<a sveltekit:prefetch href="game?rows=5&cols=5" class="inline-block p-8 bg-yellow-500 text-2xl rounded-md active:filter active:brightness-[.85] transition-all duration-150 hover:translate-x-1 hover:-translate-y-1 svelte-161vqhs">Play Game
-			</a></div></div>
+	<a sveltekit:prefetch href="game?rows=5&cols=5" class="inline-block p-8 bg-yellow-500 text-2xl rounded-md active:filter active:brightness-[.85] transition-all duration-150 hover:translate-x-1 hover:-translate-y-1 svelte-161vqhs">Play Game
+	</a></div></div>
 </main>
 
 
 
-			
-		</div>
+	
+</div>
 	</body>
 </html>
