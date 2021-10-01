@@ -1,1 +1,65 @@
-const a=self,e="cache1633126474317",s=["/nonogram-pwa/_app/start-f2c1739e.js","/nonogram-pwa/_app/assets/start-464e9d0a.css","/nonogram-pwa/_app/pages/__layout.svelte-9c9c6375.js","/nonogram-pwa/_app/assets/pages/__layout.svelte-d27438b4.css","/nonogram-pwa/_app/error.svelte-2ba1003e.js","/nonogram-pwa/_app/pages/index.svelte-54cc58c6.js","/nonogram-pwa/_app/assets/pages/index.svelte-d1a1a9de.css","/nonogram-pwa/_app/pages/game.svelte-368aa274.js","/nonogram-pwa/_app/assets/pages/game.svelte-18dc9e6f.css","/nonogram-pwa/_app/chunks/vendor-af053b12.js"].concat(["/nonogram-pwa/crossmark.svg","/nonogram-pwa/favicon.png","/nonogram-pwa/manifest.json","/nonogram-pwa/pencil-pictogram.svg"]),t=new Set(s);a.addEventListener("install",(t=>{t.waitUntil(caches.open(e).then((a=>a.addAll(s))).then((()=>{a.skipWaiting()})))})),a.addEventListener("activate",(s=>{s.waitUntil(caches.keys().then((async s=>{for(const a of s)a!==e&&await caches.delete(a);a.clients.claim()})))})),a.addEventListener("fetch",(a=>{if("GET"!==a.request.method||a.request.headers.has("range"))return;const e=new URL(a.request.url),s=e.protocol.startsWith("http"),n=e.hostname===self.location.hostname&&e.port!==self.location.port,o=e.host===self.location.host&&t.has(e.pathname),c="only-if-cached"===a.request.cache&&!o;!s||n||c||a.respondWith((async()=>o&&await caches.match(a.request)||async function(a){const e=await caches.open("offline1633126474317");try{const s=await fetch(a);return e.put(a,s.clone()),s}catch(s){const t=await e.match(a);if(t)return t;throw s}}(a.request))())}));
+const timestamp = 1633127330581;
+const build = [
+  "/nonogram-pwa/app/start-db759ecd.js",
+  "/nonogram-pwa/app/assets/start-464e9d0a.css",
+  "/nonogram-pwa/app/pages/__layout.svelte-cfb60634.js",
+  "/nonogram-pwa/app/assets/pages/__layout.svelte-d27438b4.css",
+  "/nonogram-pwa/app/error.svelte-14f0e1d9.js",
+  "/nonogram-pwa/app/pages/index.svelte-5544a0f0.js",
+  "/nonogram-pwa/app/assets/pages/index.svelte-d1a1a9de.css",
+  "/nonogram-pwa/app/pages/game.svelte-741d06a2.js",
+  "/nonogram-pwa/app/assets/pages/game.svelte-18dc9e6f.css",
+  "/nonogram-pwa/app/chunks/vendor-8b4ed79a.js"
+];
+const files = [
+  "/nonogram-pwa/crossmark.svg",
+  "/nonogram-pwa/favicon.png",
+  "/nonogram-pwa/manifest.json",
+  "/nonogram-pwa/pencil-pictogram.svg"
+];
+const worker = self;
+const FILES = `cache${timestamp}`;
+const to_cache = build.concat(files);
+const staticAssets = new Set(to_cache);
+worker.addEventListener("install", (event) => {
+  event.waitUntil(caches.open(FILES).then((cache) => cache.addAll(to_cache)).then(() => {
+    worker.skipWaiting();
+  }));
+});
+worker.addEventListener("activate", (event) => {
+  event.waitUntil(caches.keys().then(async (keys) => {
+    for (const key of keys) {
+      if (key !== FILES)
+        await caches.delete(key);
+    }
+    worker.clients.claim();
+  }));
+});
+async function fetchAndCache(request) {
+  const cache = await caches.open(`offline${timestamp}`);
+  try {
+    const response = await fetch(request);
+    cache.put(request, response.clone());
+    return response;
+  } catch (err) {
+    const response = await cache.match(request);
+    if (response)
+      return response;
+    throw err;
+  }
+}
+worker.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET" || event.request.headers.has("range"))
+    return;
+  const url = new URL(event.request.url);
+  const isHttp = url.protocol.startsWith("http");
+  const isDevServerRequest = url.hostname === self.location.hostname && url.port !== self.location.port;
+  const isStaticAsset = url.host === self.location.host && staticAssets.has(url.pathname);
+  const skipBecauseUncached = event.request.cache === "only-if-cached" && !isStaticAsset;
+  if (isHttp && !isDevServerRequest && !skipBecauseUncached) {
+    event.respondWith((async () => {
+      const cachedAsset = isStaticAsset && await caches.match(event.request);
+      return cachedAsset || fetchAndCache(event.request);
+    })());
+  }
+});
