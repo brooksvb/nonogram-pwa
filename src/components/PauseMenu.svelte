@@ -1,16 +1,17 @@
 <script>
 import { createEventDispatcher } from "svelte";
+import { base } from "$app/paths";
 
-	const dispatch = createEventDispatcher();
+const dispatch = createEventDispatcher();
 
-	export let modalActive = false;
+export let modalActive = false;
 
-	// Inlining a `return confirm()` directly in the anchor tag did not work as expected
-	let confirmLeave = (e) => {
-		if (!confirm('Are you sure you want to leave? You will lose your progress on this level.')) {
-			e.preventDefault();
-		}
-	};
+// Inlining a `return confirm()` directly in the anchor tag did not work as expected
+let confirmLeave = (e) => {
+	if (!confirm('Are you sure you want to leave? You will lose your progress on this level.')) {
+		e.preventDefault();
+	}
+};
 </script>
 
 <div id="backdrop" style={!modalActive ? 'display: none;' : ''}></div>
@@ -18,7 +19,7 @@ import { createEventDispatcher } from "svelte";
 	<h1 class="text-6xl mb-4 uppercase">Paused</h1>
 
 	<div class="flex flex-col h-full justify-center align-middle gap-8">
-		<a href="/" class="block text-4xl bg-red-300 p-4 rounded-md" on:click={confirmLeave}>Return to main menu</a>
+		<a href="{base}/" class="block text-4xl bg-red-300 p-4 rounded-md" on:click={confirmLeave}>Return to main menu</a>
 		<button on:click={() => dispatch('resume')}
 			class="text-4xl p-4 bg-green-300 border-2 border-green-400 rounded-md"
 			>Resume Game</button>

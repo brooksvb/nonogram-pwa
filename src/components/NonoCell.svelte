@@ -1,21 +1,21 @@
 <script lang="ts">
-    import { currentSelectionStore } from "/src/stores";
+import { currentSelectionStore } from "/src/stores";
 
-    import { GridCell, CellState } from "/src/Game";
-    import { GridHelper } from "/src/Game";
+import { GridCell, CellState } from "/src/Game";
+import { GridHelper } from "/src/Game";
 
-    export let gridCell: GridCell;
+export let gridCell: GridCell;
 
-    let isSelected = false;
-    $: {
-        if ($currentSelectionStore === null || !$currentSelectionStore.valid) {
-            isSelected = false;
-        } else {
-            isSelected = GridHelper.coordsAreInSelection(gridCell.x, gridCell.y, $currentSelectionStore);
-        }
+let isSelected = false;
+$: {
+    if ($currentSelectionStore === null || !$currentSelectionStore.valid) {
+        isSelected = false;
+    } else {
+        isSelected = GridHelper.coordsAreInSelection(gridCell.x, gridCell.y, $currentSelectionStore);
     }
-
+}
 </script>
+
 <div data-x={gridCell.x} data-y={gridCell.y} 
 class:marked={gridCell.state === CellState.Marked} 
 class:crossed={gridCell.state === CellState.Crossed}
@@ -37,7 +37,7 @@ class:selection={isSelected}
     }
     
     .crossed {
-        background-image: url('/crossmark.svg');
+        background-image: var(--crossmarkSvg); /* Var inherited from game-container in NonoGame */
     }
     
     .selection:not(.marked, .crossed) {

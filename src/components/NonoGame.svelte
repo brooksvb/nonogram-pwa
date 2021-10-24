@@ -3,11 +3,15 @@ import { GameController, SelectionMode } from "/src/Game";
 import { timerStore } from "/src/stores";
 import { onMount } from "svelte";
 import { fade, fly } from "svelte/transition";
+import { base } from "$app/paths";
 
 import NonoGrid from "./NonoGrid.svelte";
 import GameTimer from "./GameTimer.svelte";
 import PauseButton from "./PauseButton.svelte";
 import GameWinModal from "./GameWinModal.svelte";
+
+const crossmarkSvg = base + '/crossmark.svg';
+const pencilSvg = base + '/pencil-pictogram.svg';
 
 let controller = new GameController();
 
@@ -50,7 +54,7 @@ const removeMessageAfterDelay = () => {
 <GameWinModal {completionTime} />
 {/if}
 
-<div id="game-container" class="px-2 h-screen">
+<div id="game-container" class="px-2 h-screen" style="--crossmarkSvg: url({crossmarkSvg}); --pencilSvg: url({pencilSvg})">
 	<div id="game-header" class="flex flex-shrink-0 flex-grow-0 items-center justify-end text-3xl">
 		{#if displayIncompleteMessage}
 		<span class="inline-block fixed top-2 left-2 sm:relative sm:top-0 sm:left-0 sm:ml-4 sm:mr-auto px-4 py-2 text-xl rounded-sm bg-yellow-200" in:fly={{ y: -50, duration: 1000 }} out:fade>Puzzle is not yet complete</span>
@@ -99,14 +103,14 @@ const removeMessageAfterDelay = () => {
 	#mark-button > div {
 		width: 100%;
 		height: 100%;
-		background-image: url("/pencil-pictogram.svg");
+		background-image: var(--pencilSvg);
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: contain;
 	}
 
 	#cross-button {
-		background-image: url("/crossmark.svg");
+		background-image: var(--crossmarkSvg);
 		background-position: center;
 		background-repeat: no-repeat;
 	}

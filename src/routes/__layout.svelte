@@ -1,9 +1,12 @@
 <script>
 	import '../tailwind.postcss';
+	import { base } from '$app/paths';
 </script>
 
 <svelte:head>
-  <meta name="robots" content="noindex" />
+	<meta name="robots" content="noindex" />
+	<link rel="icon" href="{base}/favicon.png" />
+	<link rel="manifest" crossorigin="use-credentials" href="{base}/manifest.json">
 </svelte:head>
 
 <slot />
