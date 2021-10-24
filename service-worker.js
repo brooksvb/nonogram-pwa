@@ -1,22 +1,22 @@
-const timestamp = 1635038894480;
+const timestamp = 1635041264868;
 const build = [
-  "/nonogram-pwa/_app/start-0295a4c8.js",
-  "/nonogram-pwa/_app/assets/start-464e9d0a.css",
-  "/nonogram-pwa/_app/pages/__layout.svelte-4803fc3a.js",
-  "/nonogram-pwa/_app/assets/pages/__layout.svelte-d27438b4.css",
-  "/nonogram-pwa/_app/error.svelte-6af0ebfe.js",
-  "/nonogram-pwa/_app/pages/index.svelte-140f350f.js",
-  "/nonogram-pwa/_app/assets/pages/index.svelte-d1a1a9de.css",
-  "/nonogram-pwa/_app/pages/game.svelte-654b67b0.js",
-  "/nonogram-pwa/_app/assets/pages/game.svelte-9d2a756f.css",
-  "/nonogram-pwa/_app/chunks/vendor-d6fa1b04.js",
-  "/nonogram-pwa/_app/chunks/paths-28a87002.js"
+  "/nonoclone-pwa/_app/start-d845162e.js",
+  "/nonoclone-pwa/_app/assets/start-464e9d0a.css",
+  "/nonoclone-pwa/_app/pages/__layout.svelte-4803fc3a.js",
+  "/nonoclone-pwa/_app/assets/pages/__layout.svelte-d27438b4.css",
+  "/nonoclone-pwa/_app/error.svelte-6af0ebfe.js",
+  "/nonoclone-pwa/_app/pages/index.svelte-140f350f.js",
+  "/nonoclone-pwa/_app/assets/pages/index.svelte-d1a1a9de.css",
+  "/nonoclone-pwa/_app/pages/game.svelte-654b67b0.js",
+  "/nonoclone-pwa/_app/assets/pages/game.svelte-9d2a756f.css",
+  "/nonoclone-pwa/_app/chunks/vendor-d6fa1b04.js",
+  "/nonoclone-pwa/_app/chunks/paths-28a87002.js"
 ];
 const files = [
-  "/nonogram-pwa/crossmark.svg",
-  "/nonogram-pwa/favicon.png",
-  "/nonogram-pwa/manifest.json",
-  "/nonogram-pwa/pencil-pictogram.svg"
+  "/nonoclone-pwa/crossmark.svg",
+  "/nonoclone-pwa/favicon.png",
+  "/nonoclone-pwa/manifest.json",
+  "/nonoclone-pwa/pencil-pictogram.svg"
 ];
 const worker = self;
 const FILES = `cache${timestamp}`;

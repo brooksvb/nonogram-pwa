@@ -3,24 +3,24 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="robots" content="noindex" data-svelte="svelte-apfk2z"><link rel="icon" href="/nonogram-pwa/favicon.png" data-svelte="svelte-apfk2z"><link rel="manifest" crossorigin="use-credentials" href="/nonogram-pwa/manifest.json" data-svelte="svelte-apfk2z">
+		<meta name="robots" content="noindex" data-svelte="svelte-apfk2z"><link rel="icon" href="/nonoclone-pwa/favicon.png" data-svelte="svelte-apfk2z"><link rel="manifest" crossorigin="use-credentials" href="/nonoclone-pwa/manifest.json" data-svelte="svelte-apfk2z">
 
 		
 
-		<link rel="modulepreload" href="/nonogram-pwa/_app/start-0295a4c8.js">
-		<link rel="modulepreload" href="/nonogram-pwa/_app/chunks/vendor-d6fa1b04.js">
-		<link rel="modulepreload" href="/nonogram-pwa/_app/chunks/paths-28a87002.js">
-		<link rel="modulepreload" href="/nonogram-pwa/_app/pages/__layout.svelte-4803fc3a.js">
-		<link rel="modulepreload" href="/nonogram-pwa/_app/pages/game.svelte-654b67b0.js">
-		<link rel="stylesheet" href="/nonogram-pwa/_app/assets/start-464e9d0a.css">
-		<link rel="stylesheet" href="/nonogram-pwa/_app/assets/pages/__layout.svelte-d27438b4.css">
-		<link rel="stylesheet" href="/nonogram-pwa/_app/assets/pages/game.svelte-9d2a756f.css">
+		<link rel="modulepreload" href="/nonoclone-pwa/_app/start-d845162e.js">
+		<link rel="modulepreload" href="/nonoclone-pwa/_app/chunks/vendor-d6fa1b04.js">
+		<link rel="modulepreload" href="/nonoclone-pwa/_app/chunks/paths-28a87002.js">
+		<link rel="modulepreload" href="/nonoclone-pwa/_app/pages/__layout.svelte-4803fc3a.js">
+		<link rel="modulepreload" href="/nonoclone-pwa/_app/pages/game.svelte-654b67b0.js">
+		<link rel="stylesheet" href="/nonoclone-pwa/_app/assets/start-464e9d0a.css">
+		<link rel="stylesheet" href="/nonoclone-pwa/_app/assets/pages/__layout.svelte-d27438b4.css">
+		<link rel="stylesheet" href="/nonoclone-pwa/_app/assets/pages/game.svelte-9d2a756f.css">
 
 		<script type="module">
-			import { start } from "/nonogram-pwa/_app/start-0295a4c8.js";
+			import { start } from "/nonoclone-pwa/_app/start-d845162e.js";
 			start({
 				target: document.querySelector("#svelte"),
-				paths: {"base":"/nonogram-pwa","assets":""},
+				paths: {"base":"/nonoclone-pwa","assets":""},
 				session: {},
 				host: location.host,
 				route: true,
@@ -30,8 +30,8 @@
 					status: 200,
 					error: null,
 					nodes: [
-						import("/nonogram-pwa/_app/pages/__layout.svelte-4803fc3a.js"),
-						import("/nonogram-pwa/_app/pages/game.svelte-654b67b0.js")
+						import("/nonoclone-pwa/_app/pages/__layout.svelte-4803fc3a.js"),
+						import("/nonoclone-pwa/_app/pages/game.svelte-654b67b0.js")
 					],
 					page: {
 						host: location.host, // TODO this is redundant
@@ -55,7 +55,7 @@
 
 
 
-<div id="game-container" class="px-2 h-screen svelte-1lseo3b" style="--crossmarkSvg: url(/nonogram-pwa/crossmark.svg); --pencilSvg: url(/nonogram-pwa/pencil-pictogram.svg)"><div id="game-header" class="flex flex-shrink-0 flex-grow-0 items-center justify-end text-3xl svelte-1lseo3b">
+<div id="game-container" class="px-2 h-screen svelte-1lseo3b" style="--crossmarkSvg: url(/nonoclone-pwa/crossmark.svg); --pencilSvg: url(/nonoclone-pwa/pencil-pictogram.svg)"><div id="game-header" class="flex flex-shrink-0 flex-grow-0 items-center justify-end text-3xl svelte-1lseo3b">
 
 		<span class="mr-6">00:00</span>
 		<button class="border-2 border-blue-300 hover:bg-blue-200 active:bg-blue-400 transition-colors rounded-md p-2">Pause</button>
@@ -63,24 +63,24 @@
 <div id="backdrop" style="display: none;" class="svelte-bp4law"></div>
 <div id="menu" style="display: none;" class="svelte-bp4law"><h1 class="text-6xl mb-4 uppercase">Paused</h1>
 
-	<div class="flex flex-col h-full justify-center align-middle gap-8"><a href="/nonogram-pwa/" class="block text-4xl bg-red-300 p-4 rounded-md">Return to main menu</a>
+	<div class="flex flex-col h-full justify-center align-middle gap-8"><a href="/nonoclone-pwa/" class="block text-4xl bg-red-300 p-4 rounded-md">Return to main menu</a>
 		<button class="text-4xl p-4 bg-green-300 border-2 border-green-400 rounded-md">Resume Game</button></div>
 
 </div></div>
 
 	
 
-<div id="grid-slot" class="flex svelte-19vjjpb"><div id="grid-container" class="svelte-19vjjpb"><div id="column-headings" class="svelte-19vjjpb"><span class="svelte-19vjjpb">2<br>
-                </span><span class="svelte-19vjjpb">1<br>2<br>
-                </span><span class="svelte-19vjjpb">2<br>2<br>
-                </span><span class="svelte-19vjjpb">1<br>
+<div id="grid-slot" class="flex svelte-19vjjpb"><div id="grid-container" class="svelte-19vjjpb"><div id="column-headings" class="svelte-19vjjpb"><span class="svelte-19vjjpb">1<br>
+                </span><span class="svelte-19vjjpb">1<br>1<br>
+                </span><span class="svelte-19vjjpb">5<br>
                 </span><span class="svelte-19vjjpb">3<br>
+                </span><span class="svelte-19vjjpb">2<br>
                 </span></div>
-        <div id="row-headings" class="svelte-19vjjpb"><div class="svelte-19vjjpb"><span>2 </span>
+        <div id="row-headings" class="svelte-19vjjpb"><div class="svelte-19vjjpb"><span>4 </span>
+                </div><div class="svelte-19vjjpb"><span>3 </span>
+                </div><div class="svelte-19vjjpb"><span>1 2 </span>
                 </div><div class="svelte-19vjjpb"><span>2 </span>
-                </div><div class="svelte-19vjjpb"><span>1 1 </span>
-                </div><div class="svelte-19vjjpb"><span>1 1 1 </span>
-                </div><div class="svelte-19vjjpb"><span>3 1 </span>
+                </div><div class="svelte-19vjjpb"><span>1 </span>
                 </div></div>
 
         <div id="cell-container" class="svelte-19vjjpb"><div class="grid-column svelte-19vjjpb"><div data-x="0" data-y="0" class="svelte-1u7i03s"></div><div data-x="0" data-y="1" class="svelte-1u7i03s"></div><div data-x="0" data-y="2" class="svelte-1u7i03s"></div><div data-x="0" data-y="3" class="svelte-1u7i03s"></div><div data-x="0" data-y="4" class="svelte-1u7i03s"></div>
