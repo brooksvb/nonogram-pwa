@@ -18,7 +18,7 @@ const config = {
 			fallback: null,
 		}),
 		paths: {
-			base: '/nonogram-pwa'
+			base: process.env.BUILD_PATH_PREFIX ?? '' /** Allow specifying prefix when building with gh-pages */
 		}
 	}
 };
