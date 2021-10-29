@@ -1,6 +1,6 @@
 {
-    "short_name": "nonoclone-pwa",
-    "name": "Nonoclone Nonogram App",
+    "short_name": "nonogram-pwa",
+    "name": "Nonogram App",
     "start_url": "/",
     "icons": [
     ],
