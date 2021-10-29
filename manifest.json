@@ -1,11 +1,11 @@
 {
     "short_name": "nonogram-pwa",
     "name": "Nonogram App",
-    "start_url": "/nonogram-pwa",
+    "start_url": "$BUILD_PATH_PREFIX",
     "icons": [
     ],
     "display": "standalone",
-    "scope": "/nonogram-pwa",
+    "scope": "$BUILD_PATH_PREFIX",
     "background_color": "#3367D6",
     "theme_color": "#3367D6",
     "description": "Solve generated nonogram puzzles in a simple progressive web app."
