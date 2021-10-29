@@ -9,7 +9,7 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --ignore-path .gitignore  --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
-    "predeploy": "BUILD_PATH_PREFIX=/nonogram-pwa svelte-kit build && touch build/.nojekyll",
+    "predeploy": "BUILD_PATH_PREFIX=/nonogram-pwa svelte-kit build && touch build/.nojekyll && sed -i 's/\\\"\\/\\\"/\\\"\\/nonogram-pwa\\\"/g' build/manifest.json",
     "deploy": "node ./gh-pages.js",
     "clean": "rm -rf ./{.svelte-kit,build}"
   },
