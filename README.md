@@ -1,6 +1,6 @@
 # Nonogram PWA
 
-[Live Demo on Github Pages](brooksvb.github.io/nonogram-pwa)
+[Live Demo on Github Pages](https://brooksvb.github.io/nonogram-pwa)
 
 This is a project I developed in order to test out a new tech stack and experiment with making a PWA.
 
